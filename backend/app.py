@@ -12,6 +12,7 @@ from flask import (
     session,
     send_from_directory
 )
+from flask_cors import CORS
 
 from werkzeug.utils import secure_filename
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -36,6 +37,37 @@ app = Flask(
 )
 
 app.secret_key = os.environ.get("SECRET_KEY") or secrets.token_hex(32)
+
+DEFAULT_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:5000",
+    "http://localhost:8000",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5000",
+    "http://127.0.0.1:8000",
+]
+
+allowed_origins = []
+for raw_origin in (
+    os.environ.get("ALLOWED_ORIGINS") or
+    os.environ.get("FRONTEND_URL") or
+    ",".join(DEFAULT_ALLOWED_ORIGINS)
+).split(","):
+    origin = raw_origin.strip()
+    if origin:
+        allowed_origins.append(origin)
+
+if not allowed_origins:
+    allowed_origins = DEFAULT_ALLOWED_ORIGINS
+
+app.config["API_BASE_URL"] = os.environ.get("API_BASE_URL") or "http://localhost:5000"
+app.config["CORS_ALLOWED_ORIGINS"] = allowed_origins
+CORS(
+    app,
+    resources={r"/*": {"origins": allowed_origins}},
+    supports_credentials=True,
+    expose_headers=["Content-Type", "Authorization"],
+)
 
 ALLOWED_EXTENSIONS = {"pdf", "jpg", "jpeg", "png"}
 
@@ -1305,12 +1337,7 @@ def verify_otp(application_id):
 @app.route("/health")
 @app.route("/api/health")
 def health():
-
-    return jsonify({
-        "success": True,
-        "message": "ScholarMatch AI backend is running.",
-        "database": os.path.exists(DB_PATH)
-    })
+    return jsonify({"status": "ok"})
 
 
 # =========================================================
@@ -1335,7 +1362,7 @@ if __name__ == "__main__":
     print("==============================================")
     print(f"Database: {DB_PATH}")
     print(f"Frontend: {FRONTEND_DIR}")
-    print(f"Server: http://127.0.0.1:{port}")
+    print(f"Server: http://0.0.0.0:{port}")
     print("Demo OTP: 123456")
     print("==============================================")
 

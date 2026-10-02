@@ -1,0 +1,1 @@
+"""ScholarMatch AI backend package."""

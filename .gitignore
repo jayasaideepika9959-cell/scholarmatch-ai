@@ -7,6 +7,10 @@ env/
 .env
 .env.*
 !.env.example
+*.pem
+*.key
+/secrets/
+/credentials/
 
 # Keep local databases and personal uploads out of public repositories.
 *.db
