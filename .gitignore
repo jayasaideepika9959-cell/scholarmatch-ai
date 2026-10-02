@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Keep local databases and personal uploads out of public repositories.
+*.db
+*.sqlite
+*.sqlite3
+uploads/
+backend/uploads/
+
+# Historical copies are retained locally but are not deployment sources.
+backend/*backup*.py
+backend/*before*.py
+frontend/*_before_final.html

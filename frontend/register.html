@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | ScholarMatch AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 10% 20%, #173b91 0%, transparent 35%),
+                radial-gradient(circle at 90% 80%, #07334d 0%, transparent 35%),
+                #050a2d;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1120px;
+            min-height: 690px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: rgba(10, 20, 65, 0.92);
+            border: 1px solid rgba(80, 130, 255, 0.35);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+        }
+
+        .left {
+            padding: 70px 60px;
+            background: linear-gradient(145deg, #172f76, #10245e);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 70px;
+        }
+
+        .logo span {
+            color: #16d5d2;
+        }
+
+        .left h1 {
+            font-size: 42px;
+            line-height: 1.12;
+            margin-bottom: 25px;
+        }
+
+        .left h1 span {
+            color: #16d5d2;
+        }
+
+        .left p {
+            color: #c4cce9;
+            font-size: 17px;
+            line-height: 1.7;
+            max-width: 520px;
+            margin-bottom: 35px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 18px 0;
+            color: #dce4ff;
+            font-size: 16px;
+        }
+
+        .number {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #3276ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .right {
+            padding: 55px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .back {
+            color: #aeb9dd;
+            text-decoration: none;
+            margin-bottom: 25px;
+        }
+
+        .back:hover {
+            color: #16d5d2;
+        }
+
+        .right h2 {
+            font-size: 34px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #aeb9dd;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #dce3fa;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            height: 52px;
+            padding: 0 16px;
+            border-radius: 10px;
+            border: 1px solid #344c91;
+            background: #0c1641;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #16d5d2;
+            box-shadow: 0 0 0 3px rgba(22,213,210,0.1);
+        }
+
+        .message {
+            display: none;
+            padding: 12px 15px;
+            border-radius: 9px;
+            margin: 5px 0 14px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .error {
+            display: block;
+            background: rgba(170, 45, 80, 0.25);
+            border: 1px solid rgba(255, 80, 120, 0.45);
+            color: #ff9aaa;
+        }
+
+        .success {
+            display: block;
+            background: rgba(25, 160, 120, 0.2);
+            border: 1px solid rgba(25, 210, 160, 0.4);
+            color: #7df0ca;
+        }
+
+        button {
+            width: 100%;
+            height: 54px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #2775f5, #12c6dc);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        button:hover {
+            opacity: 0.92;
+        }
+
+        button:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        .login {
+            text-align: center;
+            margin-top: 25px;
+            color: #aeb9dd;
+        }
+
+        .login a {
+            color: #16d5d2;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        @media (max-width: 850px) {
+            body {
+                padding: 15px;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .left {
+                display: none;
+            }
+
+            .right {
+                padding: 40px 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="left">
+
+        <div class="logo">
+            Scholar<span>Match</span> AI
+        </div>
+
+        <h1>
+            Start Your<br>
+            <span>Scholarship Journey.</span>
+        </h1>
+
+        <p>
+            Create your profile once and let ScholarMatch AI help you
+            discover, understand and prepare for relevant opportunities.
+        </p>
+
+        <div class="feature">
+            <div class="number">1</div>
+            <span>Create your student profile</span>
+        </div>
+
+        <div class="feature">
+            <div class="number">2</div>
+            <span>Discover matched scholarships</span>
+        </div>
+
+        <div class="feature">
+            <div class="number">3</div>
+            <span>Prepare your application</span>
+        </div>
+
+    </div>
+
+    <div class="right">
+
+        <a href="/" class="back">← Back to Home</a>
+
+        <h2>Create Account</h2>
+
+        <p class="subtitle">
+            Start your personalized scholarship journey.
+        </p>
+
+        <form id="registerForm" novalidate>
+
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input
+                    type="text"
+                    id="full_name"
+                    name="full_name"
+                    autocomplete="name"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="new-password"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    autocomplete="new-password"
+                    required
+                >
+            </div>
+
+            <div id="message" class="message"></div>
+
+            <button type="submit" id="registerButton">
+                Create Account →
+            </button>
+
+        </form>
+
+        <div class="login">
+            Already have an account?
+            <a href="/login">Login</a>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const form = document.getElementById("registerForm");
+const button = document.getElementById("registerButton");
+const message = document.getElementById("message");
+
+function showMessage(text, type) {
+    message.textContent = text;
+    message.className = "message " + type;
+}
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const fullName =
+        document.getElementById("full_name").value.trim();
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const confirmPassword =
+        document.getElementById("confirm_password").value;
+
+    /*
+       IMPORTANT:
+       Check the actual values, not the HTML elements.
+    */
+
+    if (!fullName || !email || !password || !confirmPassword) {
+        showMessage("Please fill all required fields.", "error");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        showMessage("Passwords do not match.", "error");
+        return;
+    }
+
+    if (password.length < 6) {
+        showMessage(
+            "Password must contain at least 6 characters.",
+            "error"
+        );
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Creating Account...";
+
+    try {
+
+        const response = await fetch("/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                full_name: fullName,
+                name: fullName,
+                email: email,
+                password: password,
+                confirm_password: confirmPassword
+            })
+        });
+
+        const contentType =
+            response.headers.get("content-type") || "";
+
+        let data;
+
+        if (contentType.includes("application/json")) {
+            data = await response.json();
+        } else {
+            const text = await response.text();
+
+            if (response.ok) {
+                window.location.href = "/login";
+                return;
+            }
+
+            throw new Error(
+                "Server returned an unexpected response."
+            );
+        }
+
+        if (!response.ok) {
+            showMessage(
+                data.message ||
+                data.error ||
+                "Registration failed. Please try again.",
+                "error"
+            );
+
+            button.disabled = false;
+            button.textContent = "Create Account →";
+            return;
+        }
+
+        if (data.success === false) {
+            showMessage(
+                data.message ||
+                data.error ||
+                "Registration failed.",
+                "error"
+            );
+
+            button.disabled = false;
+            button.textContent = "Create Account →";
+            return;
+        }
+
+        showMessage(
+            "Account created successfully! Redirecting...",
+            "success"
+        );
+
+        setTimeout(function() {
+            window.location.href = "/login";
+        }, 800);
+
+    } catch (error) {
+
+        console.error("Registration error:", error);
+
+        showMessage(
+            "Unable to connect to the server. Please make sure Flask is running.",
+            "error"
+        );
+
+        button.disabled = false;
+        button.textContent = "Create Account →";
+    }
+
+});
+
+</script>
+
+</body>
+</html>

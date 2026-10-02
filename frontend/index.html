@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScholarMatch AI</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #060b28;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            height: 76px;
+            padding: 0 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: rgba(6, 11, 40, 0.88);
+            backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 11px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(
+                135deg,
+                #2864f0,
+                #20d6c7
+            );
+
+            font-size: 20px;
+        }
+
+        .logo span {
+            color: #20d6c7;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #c9cee8;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            color: #20d6c7;
+        }
+
+        .login-btn {
+            padding: 10px 20px;
+            border: 1px solid #3c6eff;
+            border-radius: 9px;
+            color: white !important;
+        }
+
+        .get-started-nav {
+            padding: 11px 20px;
+            border-radius: 9px;
+
+            background: linear-gradient(
+                135deg,
+                #2864f0,
+                #08b9ee
+            );
+
+            color: white !important;
+
+            box-shadow: 0 8px 25px rgba(40,100,240,0.3);
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 650px;
+
+            padding: 80px 6% 65px;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            gap: 50px;
+            align-items: center;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+
+            position: absolute;
+
+            width: 600px;
+            height: 600px;
+
+            background: #254cff;
+
+            filter: blur(180px);
+
+            opacity: 0.18;
+
+            right: -200px;
+            top: -100px;
+        }
+
+        .hero::after {
+            content: "";
+
+            position: absolute;
+
+            width: 450px;
+            height: 450px;
+
+            background: #8a3ffc;
+
+            filter: blur(180px);
+
+            opacity: 0.12;
+
+            left: -200px;
+            bottom: -150px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 9px 17px;
+
+            border-radius: 30px;
+
+            color: #7da1ff;
+
+            border: 1px solid #3158c9;
+
+            background: rgba(40,100,240,0.12);
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: clamp(45px, 5vw, 72px);
+
+            line-height: 1.02;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 25px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(
+                90deg,
+                #2864f0,
+                #20d6c7
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-description {
+            max-width: 620px;
+
+            color: #b5bddc;
+
+            font-size: 17px;
+
+            line-height: 1.8;
+
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 35px;
+        }
+
+        .primary-btn {
+            padding: 15px 26px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: linear-gradient(
+                135deg,
+                #2864f0,
+                #0aaeea
+            );
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            box-shadow: 0 12px 30px rgba(40,100,240,0.35);
+        }
+
+        .secondary-btn {
+            padding: 14px 26px;
+
+            border-radius: 10px;
+
+            border: 1px solid #42528f;
+
+            background: rgba(255,255,255,0.03);
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 15px;
+        }
+
+        .hero-highlights {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .highlight {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: #c9cee8;
+
+            font-size: 13px;
+        }
+
+        .highlight-icon {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(40,100,240,0.2);
+
+            color: #20d6c7;
+        }
+
+        /* ================= HERO IMAGE ================= */
+
+        .hero-visual {
+            position: relative;
+
+            min-height: 510px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+        .image-glow {
+            position: absolute;
+
+            width: 420px;
+            height: 420px;
+
+            border-radius: 50%;
+
+            background: #2864f0;
+
+            filter: blur(100px);
+
+            opacity: 0.22;
+        }
+
+        .student-image {
+            width: 410px;
+            height: 480px;
+
+            object-fit: cover;
+
+            border-radius: 28px;
+
+            position: relative;
+
+            z-index: 2;
+
+            border: 1px solid rgba(255,255,255,0.18);
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.45),
+                0 0 50px rgba(40,100,240,0.18);
+        }
+
+        /* IMAGE OVERLAY */
+
+        .image-overlay {
+            position: absolute;
+
+            z-index: 4;
+
+            background: rgba(12,22,62,0.92);
+
+            backdrop-filter: blur(15px);
+
+            border: 1px solid rgba(91,119,255,0.5);
+
+            border-radius: 15px;
+
+            box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+        }
+
+        .match-card {
+            width: 250px;
+
+            right: -10px;
+            top: 70px;
+
+            padding: 18px;
+        }
+
+        .match-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+        .match-title {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .demo {
+            font-size: 10px;
+
+            padding: 4px 8px;
+
+            border-radius: 20px;
+
+            background: #1d2a61;
+
+            color: #9aa9e6;
+        }
+
+        .match-number {
+            font-size: 42px;
+
+            color: #20d6c7;
+
+            font-weight: 800;
+        }
+
+        .match-label {
+            color: #9ca6cc;
+
+            font-size: 11px;
+        }
+
+        .progress {
+            height: 7px;
+
+            background: #293565;
+
+            border-radius: 20px;
+
+            margin: 12px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+
+            width: 92%;
+
+            border-radius: 20px;
+
+            background: linear-gradient(
+                90deg,
+                #2864f0,
+                #20d6c7
+            );
+        }
+
+        .criteria {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 7px;
+        }
+
+        .criteria div {
+            padding: 8px;
+
+            background: rgba(255,255,255,0.05);
+
+            border-radius: 7px;
+
+            font-size: 10px;
+
+            color: #cbd2ed;
+        }
+
+        .check {
+            color: #20d6c7;
+        }
+
+        .readiness-card {
+            width: 210px;
+
+            left: -30px;
+            bottom: 60px;
+
+            padding: 16px;
+        }
+
+        .readiness-title {
+            font-size: 11px;
+
+            color: #aeb7dc;
+
+            margin-bottom: 8px;
+        }
+
+        .readiness-score {
+            font-size: 30px;
+
+            font-weight: 800;
+
+            color: #8d70ff;
+        }
+
+        .readiness-small {
+            color: #9ca6cc;
+
+            font-size: 10px;
+        }
+
+        .document-card {
+            right: -25px;
+            bottom: 35px;
+
+            width: 170px;
+
+            padding: 14px;
+        }
+
+        .document-card strong {
+            font-size: 11px;
+        }
+
+        .warning {
+            margin-top: 8px;
+
+            padding: 7px;
+
+            border-radius: 7px;
+
+            background: rgba(255,174,0,0.1);
+
+            color: #ffc34d;
+
+            font-size: 10px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            margin: 0 6%;
+
+            padding: 22px;
+
+            display: grid;
+
+            grid-template-columns: repeat(4,1fr);
+
+            background: rgba(22,34,83,0.8);
+
+            border: 1px solid #2a3a7c;
+
+            border-radius: 18px;
+
+            backdrop-filter: blur(15px);
+
+            position: relative;
+
+            z-index: 10;
+        }
+
+        .stat {
+            text-align: center;
+
+            border-right: 1px solid #344172;
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat-number {
+            font-size: 30px;
+
+            font-weight: 800;
+
+            color: #20d6c7;
+        }
+
+        .stat-label {
+            color: #aeb7d6;
+
+            font-size: 12px;
+
+            margin-top: 4px;
+        }
+
+        /* ================= SECTION ================= */
+
+        .section {
+            padding: 100px 6%;
+        }
+
+        .section-header {
+            text-align: center;
+
+            margin-bottom: 50px;
+        }
+
+        .section-label {
+            color: #20d6c7;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 10px;
+        }
+
+        .section-header h2 {
+            font-size: 42px;
+
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: #9ea8ce;
+        }
+
+        /* ================= STEPS ================= */
+
+        .steps {
+            display: grid;
+
+            grid-template-columns: repeat(5,1fr);
+
+            gap: 16px;
+        }
+
+        .step {
+            position: relative;
+
+            padding: 25px;
+
+            min-height: 230px;
+
+            background: linear-gradient(
+                145deg,
+                #10194a,
+                #0c143c
+            );
+
+            border: 1px solid #27366f;
+
+            border-radius: 16px;
+
+            transition: 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-8px);
+
+            border-color: #4e72e8;
+
+            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+        }
+
+        .step-number {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #2864f0;
+
+            font-weight: bold;
+
+            margin-bottom: 25px;
+        }
+
+        .step h3 {
+            font-size: 17px;
+
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: #9fa8cc;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            display: grid;
+
+            grid-template-columns: repeat(3,1fr);
+
+            gap: 20px;
+        }
+
+        .feature {
+            padding: 30px;
+
+            border-radius: 17px;
+
+            background: #0e173f;
+
+            border: 1px solid #25366f;
+
+            transition: 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-7px);
+
+            border-color: #4b6ee4;
+        }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 24px;
+
+            background: linear-gradient(
+                135deg,
+                rgba(40,100,240,0.25),
+                rgba(32,214,199,0.12)
+            );
+
+            margin-bottom: 20px;
+        }
+
+        .feature h3 {
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #9fa8cc;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+
+        /* ================= CTA ================= */
+
+        .cta {
+            margin: 30px 6% 90px;
+
+            padding: 70px 30px;
+
+            text-align: center;
+
+            border-radius: 25px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    #18286c,
+                    #0d153b
+                );
+
+            border: 1px solid #31478e;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .cta h2 {
+            font-size: 42px;
+
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #aab3d4;
+
+            margin-bottom: 28px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            padding: 30px 6%;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+
+            text-align: center;
+
+            color: #707a9f;
+
+            font-size: 12px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width:1100px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons,
+            .hero-highlights {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                margin-top: 30px;
+            }
+
+            .steps {
+                grid-template-columns: repeat(3,1fr);
+            }
+
+            .features {
+                grid-template-columns: repeat(2,1fr);
+            }
+
+        }
+
+        @media(max-width:750px) {
+
+            .nav-links a:not(.login-btn):not(.get-started-nav) {
+                display: none;
+            }
+
+            .get-started-nav {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 55px;
+            }
+
+            .hero h1 {
+                font-size: 45px;
+            }
+
+            .student-image {
+                width: 300px;
+                height: 380px;
+            }
+
+            .match-card {
+                right: 0;
+                top: 30px;
+            }
+
+            .readiness-card {
+                left: 0;
+            }
+
+            .document-card {
+                right: 0;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+
+            .stat {
+                border-right: none;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2,
+            .cta h2 {
+                font-size: 32px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav>
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            🎓
+        </div>
+
+        Scholar<span>Match</span> AI
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="#">
+            Home
+        </a>
+
+        <a href="#how">
+            How It Works
+        </a>
+
+        <a href="#features">
+            Features
+        </a>
+
+        <a href="/login" class="login-btn">
+            Login
+        </a>
+
+        <a href="/register" class="get-started-nav">
+            Get Started
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+
+    <div class="hero-content">
+
+        <div class="badge">
+            ✨ AI for Education & Student Empowerment
+        </div>
+
+
+        <h1>
+
+            From Eligibility to
+
+            <span class="gradient-text">
+                Application Readiness.
+            </span>
+
+        </h1>
+
+
+        <p class="hero-description">
+
+            Discover personalized scholarships, understand why
+            you match, identify what's missing, and get a clear
+            path to apply — all in one place.
+
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a href="/register" class="primary-btn">
+                Get Started →
+            </a>
+
+            <a href="#how" class="secondary-btn">
+                ▶ Watch How It Works
+            </a>
+
+        </div>
+
+
+        <div class="hero-highlights">
+
+            <div class="highlight">
+
+                <div class="highlight-icon">
+                    🎯
+                </div>
+
+                Personalized Matches
+
+            </div>
+
+
+            <div class="highlight">
+
+                <div class="highlight-icon">
+                    🤖
+                </div>
+
+                AI Guidance
+
+            </div>
+
+
+            <div class="highlight">
+
+                <div class="highlight-icon">
+                    📋
+                </div>
+
+                Application Tracking
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- HERO VISUAL -->
+
+    <div class="hero-visual">
+
+        <div class="image-glow"></div>
+
+
+        <img
+            class="student-image"
+            src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=85"
+            alt="Students studying together"
+        >
+
+
+        <!-- MATCH CARD -->
+
+        <div class="image-overlay match-card">
+
+            <div class="match-top">
+
+                <div class="match-title">
+                    Sample Merit Scholarship
+                </div>
+
+                <div class="demo">
+                    DEMO
+                </div>
+
+            </div>
+
+
+            <div class="match-number">
+                92%
+            </div>
+
+            <div class="match-label">
+                Match Score
+            </div>
+
+
+            <div class="progress">
+
+                <div class="progress-bar"></div>
+
+            </div>
+
+
+            <div class="criteria">
+
+                <div>
+                    <span class="check">✓</span>
+                    Academic
+                </div>
+
+                <div>
+                    <span class="check">✓</span>
+                    Income
+                </div>
+
+                <div>
+                    <span class="check">✓</span>
+                    Location
+                </div>
+
+                <div>
+                    <span class="check">✓</span>
+                    Course
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- READINESS -->
+
+        <div class="image-overlay readiness-card">
+
+            <div class="readiness-title">
+                APPLICATION READINESS
+            </div>
+
+            <div class="readiness-score">
+                85%
+            </div>
+
+            <div class="readiness-small">
+                Ready to Apply
+            </div>
+
+            <div class="progress">
+
+                <div
+                    class="progress-bar"
+                    style="width:85%;">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DOCUMENT -->
+
+        <div class="image-overlay document-card">
+
+            <strong>
+                📄 Missing Documents
+            </strong>
+
+            <div class="warning">
+                ⚠ Income Certificate
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <div class="stat-number">
+            Smart
+        </div>
+
+        <div class="stat-label">
+            Scholarship Matching
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-number">
+            AI
+        </div>
+
+        <div class="stat-label">
+            Match Explanation
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-number">
+            Ready
+        </div>
+
+        <div class="stat-label">
+            Application Preparation
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-number">
+            Track
+        </div>
+
+        <div class="stat-label">
+            Application Progress
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section class="section" id="how">
+
+    <div class="section-header">
+
+        <div class="section-label">
+            HOW IT WORKS
+        </div>
+
+        <h2>
+            One Clear Path to Apply
+        </h2>
+
+        <p>
+            Match. Understand. Fix. Get Ready. Apply.
+        </p>
+
+    </div>
+
+
+    <div class="steps">
+
+
+        <div class="step">
+
+            <div class="step-number">
+                1
+            </div>
+
+            <h3>
+                Create Your Profile
+            </h3>
+
+            <p>
+                Add your course, academic score,
+                family income and location.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                2
+            </div>
+
+            <h3>
+                Smart Match
+            </h3>
+
+            <p>
+                Find scholarships that match
+                your eligibility profile.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                3
+            </div>
+
+            <h3>
+                Why I Match?
+            </h3>
+
+            <p>
+                Understand in simple language
+                why a scholarship fits you.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                4
+            </div>
+
+            <h3>
+                Find Gaps
+            </h3>
+
+            <p>
+                Identify missing documents
+                and eligibility requirements.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">
+                5
+            </div>
+
+            <h3>
+                Get Application Ready
+            </h3>
+
+            <p>
+                Check readiness, deadlines
+                and your next action.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="section" id="features">
+
+    <div class="section-header">
+
+        <div class="section-label">
+            KEY FEATURES
+        </div>
+
+        <h2>
+            Everything a Student Needs
+        </h2>
+
+        <p>
+            From scholarship discovery to application tracking.
+        </p>
+
+    </div>
+
+
+    <div class="features">
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                🎯
+            </div>
+
+            <h3>
+                Smart Matching
+            </h3>
+
+            <p>
+                Match student profiles with
+                relevant scholarship opportunities.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                💡
+            </div>
+
+            <h3>
+                Why I Match?
+            </h3>
+
+            <p>
+                Get simple AI-powered explanations
+                for scholarship matches.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ⚠️
+            </div>
+
+            <h3>
+                Eligibility Gap
+            </h3>
+
+            <p>
+                See exactly what is missing
+                before applying.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📊
+            </div>
+
+            <h3>
+                Readiness Score
+            </h3>
+
+            <p>
+                Understand how prepared you are
+                to submit your application.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ⏰
+            </div>
+
+            <h3>
+                Deadline Priority
+            </h3>
+
+            <p>
+                Know which scholarship deadline
+                needs attention first.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📋
+            </div>
+
+            <h3>
+                Application Tracker
+            </h3>
+
+            <p>
+                Track your application from
+                saved to submitted.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta" id="start">
+
+    <h2>
+        Ready to Find Your Scholarship Path?
+    </h2>
+
+    <p>
+        Match. Understand. Fix. Get Ready. Apply.
+    </p>
+
+    <a href="/register" class="primary-btn">
+        Create Your Profile →
+    </a>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    © 2026 ScholarMatch AI · From Eligibility to Application Readiness
+
+</footer>
+
+
+</body>
+
+</html>

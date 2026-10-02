@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Applications | ScholarMatch AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(
+                    circle at 15% 20%,
+                    rgba(31, 91, 255, 0.18),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 85% 80%,
+                    rgba(0, 210, 210, 0.10),
+                    transparent 30%
+                ),
+                #05091f;
+
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        header {
+            height: 74px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            background: rgba(4, 8, 30, 0.95);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #18d8d2;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .back-btn,
+        .logout-btn {
+            padding: 10px 18px;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .back-btn {
+            background: #111d43;
+            color: white;
+
+            border: 1px solid #29417d;
+        }
+
+        .logout-btn {
+            background: transparent;
+            color: white;
+
+            border: 1px solid #29417d;
+        }
+
+        .back-btn:hover,
+        .logout-btn:hover {
+            background: #17285c;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 88%;
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding: 48px 0 70px;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 8px 14px;
+
+            border: 1px solid #087f9c;
+
+            color: #18d8d2;
+
+            border-radius: 30px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .hero h1 span {
+            color: #18d8d2;
+        }
+
+        .hero p {
+            color: #aeb7d5;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+
+            margin-bottom: 35px;
+        }
+
+        /* SUMMARY */
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            padding: 22px;
+
+            background:
+                rgba(12, 22, 62, 0.75);
+
+            border: 1px solid #263e78;
+
+            border-radius: 16px;
+        }
+
+        .summary-label {
+            color: #8793b5;
+
+            font-size: 12px;
+
+            margin-bottom: 8px;
+        }
+
+        .summary-value {
+            font-size: 28px;
+
+            font-weight: 800;
+
+            color: #18d8d2;
+        }
+
+        /* APPLICATION PANEL */
+
+        .panel {
+            background:
+                rgba(12, 22, 62, 0.75);
+
+            border: 1px solid #263e78;
+
+            border-radius: 18px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.20);
+        }
+
+        .panel-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+        }
+
+        .panel-header h2 {
+            font-size: 21px;
+        }
+
+        .refresh-btn {
+            background: #111d43;
+
+            color: #18d8d2;
+
+            border: 1px solid #29417d;
+
+            padding: 9px 15px;
+
+            border-radius: 8px;
+
+            font-weight: 600;
+        }
+
+        .refresh-btn:hover {
+            background: #17285c;
+        }
+
+        /* APPLICATION CARD */
+
+        #applications {
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+        }
+
+        .application-card {
+            background: #0b1635;
+
+            border: 1px solid #253d70;
+
+            border-radius: 14px;
+
+            padding: 21px;
+
+            transition: 0.2s ease;
+        }
+
+        .application-card:hover {
+            border-color: #18d8d2;
+
+            transform: translateY(-2px);
+        }
+
+        .application-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 20px;
+        }
+
+        .application-title {
+            font-size: 18px;
+
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+        .application-id {
+            color: #8390b3;
+
+            font-size: 12px;
+        }
+
+        .status-badge {
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .status-draft {
+            background: #292a18;
+
+            color: #e6db70;
+
+            border: 1px solid #5c5724;
+        }
+
+        .status-verified {
+            background: #103b35;
+
+            color: #69e4d1;
+
+            border: 1px solid #246d61;
+        }
+
+        .status-pending {
+            background: #172e52;
+
+            color: #83b8ff;
+
+            border: 1px solid #31568c;
+        }
+
+        .status-default {
+            background: #202945;
+
+            color: #aeb9d4;
+
+            border: 1px solid #36466e;
+        }
+
+        .application-details {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+
+            margin-top: 20px;
+        }
+
+        .detail {
+            padding: 13px;
+
+            background: #0e1b3d;
+
+            border-radius: 9px;
+
+            border: 1px solid #1c315c;
+        }
+
+        .detail-label {
+            color: #7684a9;
+
+            font-size: 10px;
+
+            margin-bottom: 5px;
+
+            text-transform: uppercase;
+        }
+
+        .detail-value {
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+        .application-bottom {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-top: 18px;
+
+            padding-top: 16px;
+
+            border-top: 1px solid #1d3158;
+        }
+
+        .otp-status {
+            font-size: 12px;
+
+            color: #8f9cbb;
+        }
+
+        .otp-verified {
+            color: #5ce0cf;
+        }
+
+        .view-btn {
+            border: 1px solid #29518e;
+
+            background: transparent;
+
+            color: #18d8d2;
+
+            padding: 9px 16px;
+
+            border-radius: 8px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .view-btn:hover {
+            background: #132b55;
+        }
+
+        /* LOADING */
+
+        .loading {
+            text-align: center;
+
+            padding: 55px 20px;
+
+            color: #929dbb;
+        }
+
+        .spinner {
+            width: 32px;
+            height: 32px;
+
+            border: 3px solid #263d70;
+
+            border-top-color: #18d8d2;
+
+            border-radius: 50%;
+
+            animation: spin 0.8s linear infinite;
+
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+        /* EMPTY */
+
+        .empty {
+            text-align: center;
+
+            padding: 55px 20px;
+
+            color: #8e99b7;
+        }
+
+        .empty h3 {
+            color: white;
+
+            margin-bottom: 10px;
+        }
+
+        .empty-btn {
+            margin-top: 20px;
+
+            padding: 11px 18px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #2768ed,
+                    #12b9df
+                );
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-weight: 700;
+        }
+
+        /* ERROR */
+
+        .error {
+            text-align: center;
+
+            padding: 35px;
+
+            color: #ff9eaf;
+
+            background: #321824;
+
+            border: 1px solid #693043;
+
+            border-radius: 10px;
+        }
+
+        /* MODAL */
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0,0,0,0.72);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 1000;
+        }
+
+        .modal.hidden {
+            display: none;
+        }
+
+        .modal-card {
+            width: 100%;
+
+            max-width: 650px;
+
+            max-height: 85vh;
+
+            overflow-y: auto;
+
+            background: #0c1938;
+
+            border: 1px solid #29447a;
+
+            border-radius: 16px;
+
+            padding: 28px;
+        }
+
+        .modal-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 22px;
+        }
+
+        .modal-header h2 {
+            font-size: 21px;
+        }
+
+        .close-btn {
+            background: transparent;
+
+            color: #9aa6c4;
+
+            border: none;
+
+            font-size: 25px;
+
+            cursor: pointer;
+        }
+
+        .modal-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 12px;
+        }
+
+        .modal-item {
+            background: #0a1632;
+
+            border: 1px solid #1e335e;
+
+            border-radius: 9px;
+
+            padding: 13px;
+        }
+
+        .modal-item.full {
+            grid-column: 1 / -1;
+        }
+
+        .modal-label {
+            color: #7f8cae;
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+        }
+
+        .modal-value {
+            color: white;
+
+            font-size: 13px;
+
+            word-break: break-word;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .application-details {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-item.full {
+                grid-column: auto;
+            }
+
+            .application-top {
+                flex-direction: column;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            header {
+                padding: 0 5%;
+            }
+
+            .back-btn {
+                display: none;
+            }
+
+            .container {
+                width: 92%;
+                padding-top: 30px;
+            }
+
+            .hero h1 {
+                font-size: 31px;
+            }
+
+            .panel {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        Scholar<span>Match</span> AI
+    </div>
+
+
+    <div class="nav-right">
+
+        <button
+            class="back-btn"
+            onclick="goDashboard()"
+        >
+            ← Dashboard
+        </button>
+
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<main class="container">
+
+
+    <section class="hero">
+
+        <div class="badge">
+            APPLICATION MANAGEMENT
+        </div>
+
+
+        <h1>
+            My <span>Applications</span>
+        </h1>
+
+
+        <p>
+            View the scholarship applications you have
+            prepared through ScholarMatch AI.
+        </p>
+
+    </section>
+
+
+
+    <!-- SUMMARY -->
+
+    <section class="summary-grid">
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Applications
+            </div>
+
+            <div
+                class="summary-value"
+                id="totalApplications"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                OTP Verified
+            </div>
+
+            <div
+                class="summary-value"
+                id="verifiedApplications"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Pending Verification
+            </div>
+
+            <div
+                class="summary-value"
+                id="pendingApplications"
+            >
+                0
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- APPLICATIONS -->
+
+    <section class="panel">
+
+
+        <div class="panel-header">
+
+            <h2>
+                Your Applications
+            </h2>
+
+
+            <button
+                class="refresh-btn"
+                onclick="loadApplications()"
+            >
+                ↻ Refresh
+            </button>
+
+        </div>
+
+
+        <div id="applications">
+
+            <div class="loading">
+
+                <div class="spinner"></div>
+
+                Loading applications...
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- VIEW MODAL -->
+
+<div
+    id="applicationModal"
+    class="modal hidden"
+>
+
+    <div class="modal-card">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Application Details
+            </h2>
+
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="modalContent"
+            class="modal-grid"
+        >
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+let applicationsData = [];
+
+
+/* =========================================================
+   LOAD APPLICATIONS
+========================================================= */
+
+async function loadApplications() {
+
+    const container =
+        document.getElementById(
+            "applications"
+        );
+
+
+    container.innerHTML = `
+
+        <div class="loading">
+
+            <div class="spinner"></div>
+
+            Loading applications...
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/applications",
+                {
+                    method: "GET",
+
+                    credentials: "include"
+                }
+            );
+
+
+        const contentType =
+            response.headers.get(
+                "content-type"
+            ) || "";
+
+
+        if (
+            !contentType.includes(
+                "application/json"
+            )
+        ) {
+
+            throw new Error(
+                "The server returned an unexpected response."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                data.message ||
+                "Unable to load applications."
+            );
+
+        }
+
+
+        /*
+            Support the common response formats
+            used by the existing Flask backend.
+        */
+
+        applicationsData =
+            data.applications ||
+            data.results ||
+            data.data ||
+            data;
+
+
+        if (!Array.isArray(applicationsData)) {
+
+            applicationsData = [];
+
+        }
+
+
+        updateSummary();
+
+        renderApplications();
+
+
+    } catch (error) {
+
+        console.error(
+            "Applications error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="error">
+
+                <strong>
+                    Unable to load applications
+                </strong>
+
+                <p style="margin-top:10px;">
+                    ${escapeHTML(error.message)}
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE SUMMARY
+========================================================= */
+
+function updateSummary() {
+
+    const total =
+        applicationsData.length;
+
+
+    const verified =
+        applicationsData.filter(
+            function(application) {
+
+                return (
+                    application.otp_verified === 1 ||
+                    application.otp_verified === true ||
+                    String(
+                        application.otp_verified
+                    ) === "1"
+                );
+
+            }
+        ).length;
+
+
+    const pending =
+        total - verified;
+
+
+    document.getElementById(
+        "totalApplications"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "verifiedApplications"
+    ).textContent =
+        verified;
+
+
+    document.getElementById(
+        "pendingApplications"
+    ).textContent =
+        pending;
+
+}
+
+
+/* =========================================================
+   RENDER APPLICATIONS
+========================================================= */
+
+function renderApplications() {
+
+    const container =
+        document.getElementById(
+            "applications"
+        );
+
+
+    if (!applicationsData.length) {
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    No applications yet
+                </h3>
+
+                <p>
+                    Find a scholarship and create
+                    your first application.
+                </p>
+
+                <button
+                    class="empty-btn"
+                    onclick="goDashboard()"
+                >
+                    Find Scholarships →
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        applicationsData
+        .map(
+            function(application, index) {
+
+                return createApplicationCard(
+                    application,
+                    index
+                );
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   APPLICATION CARD
+========================================================= */
+
+function createApplicationCard(
+    application,
+    index
+) {
+
+    const applicationId =
+        application.application_id ||
+        application.id ||
+        application.applicationId ||
+        ("SM-" + (index + 1));
+
+
+    const scholarshipName =
+        application.scholarship_name ||
+        application.scholarship ||
+        "Scholarship Application";
+
+
+    const status =
+        application.status ||
+        "Draft";
+
+
+    const createdAt =
+        formatDate(
+            application.created_at ||
+            application.createdAt ||
+            application.date
+        );
+
+
+    const otpVerified =
+        application.otp_verified === 1 ||
+        application.otp_verified === true ||
+        String(
+            application.otp_verified
+        ) === "1";
+
+
+    let statusClass =
+        "status-default";
+
+
+    if (
+        status.toLowerCase()
+            .includes("verified")
+    ) {
+
+        statusClass =
+            "status-verified";
+
+    }
+
+    else if (
+        status.toLowerCase()
+            .includes("pending")
+    ) {
+
+        statusClass =
+            "status-pending";
+
+    }
+
+    else if (
+        status.toLowerCase()
+            .includes("draft")
+    ) {
+
+        statusClass =
+            "status-draft";
+
+    }
+
+
+    return `
+
+        <div class="application-card">
+
+
+            <div class="application-top">
+
+
+                <div>
+
+                    <div class="application-title">
+
+                        ${escapeHTML(
+                            scholarshipName
+                        )}
+
+                    </div>
+
+
+                    <div class="application-id">
+
+                        Application ID:
+                        ${escapeHTML(
+                            applicationId
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="status-badge
+                    ${statusClass}"
+                >
+
+                    ${escapeHTML(status)}
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="application-details">
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Created
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(createdAt)}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Course
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(
+                            application.course ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <div class="detail-label">
+                        Category
+                    </div>
+
+                    <div class="detail-value">
+                        ${escapeHTML(
+                            application.category ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="application-bottom">
+
+
+                <div class="otp-status">
+
+                    OTP Status:
+
+                    <span
+                        class="${
+                            otpVerified
+                            ? "otp-verified"
+                            : ""
+                        }"
+                    >
+
+                        ${
+                            otpVerified
+                            ? "✓ Verified"
+                            : "Pending"
+                        }
+
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="view-btn"
+                    onclick="viewApplication(${index})"
+                >
+                    View Application
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   VIEW APPLICATION
+========================================================= */
+
+function viewApplication(index) {
+
+    const application =
+        applicationsData[index];
+
+
+    if (!application) {
+        return;
+    }
+
+
+    const container =
+        document.getElementById(
+            "modalContent"
+        );
+
+
+    container.innerHTML = "";
+
+
+    const fields = [
+
+        ["Application ID",
+            application.application_id ||
+            application.id ||
+            application.applicationId ||
+            "-"
+        ],
+
+        ["Scholarship",
+            application.scholarship_name ||
+            application.scholarship ||
+            "-"
+        ],
+
+        ["Full Name",
+            application.full_name ||
+            "-"
+        ],
+
+        ["Email",
+            application.email ||
+            "-"
+        ],
+
+        ["Phone",
+            application.phone ||
+            "-"
+        ],
+
+        ["State",
+            application.state ||
+            "-"
+        ],
+
+        ["Course",
+            application.course ||
+            "-"
+        ],
+
+        ["College",
+            application.college ||
+            "-"
+        ],
+
+        ["Academic Percentage",
+            application.academic_percentage !== undefined
+                ? application.academic_percentage + "%"
+                : "-"
+        ],
+
+        ["Annual Family Income",
+            application.annual_family_income !== undefined
+                ? "₹ " +
+                  Number(
+                      application.annual_family_income
+                  ).toLocaleString("en-IN")
+                : "-"
+        ],
+
+        ["Category",
+            application.category ||
+            "-"
+        ],
+
+        ["Gender",
+            application.gender ||
+            "-"
+        ],
+
+        ["Status",
+            application.status ||
+            "Draft"
+        ],
+
+        ["OTP Verification",
+            (
+                application.otp_verified === 1 ||
+                application.otp_verified === true ||
+                String(
+                    application.otp_verified
+                ) === "1"
+            )
+            ? "Verified"
+            : "Pending"
+        ],
+
+        ["Created At",
+            formatDate(
+                application.created_at ||
+                application.createdAt
+            )
+        ],
+
+        ["Additional Details",
+            application.additional_details ||
+            "-"
+        ]
+
+    ];
+
+
+    fields.forEach(
+        function(item) {
+
+            const div =
+                document.createElement("div");
+
+
+            div.className =
+                "modal-item";
+
+
+            if (
+                item[0] ===
+                "Additional Details"
+            ) {
+
+                div.classList.add(
+                    "full"
+                );
+
+            }
+
+
+            div.innerHTML = `
+
+                <div class="modal-label">
+
+                    ${escapeHTML(
+                        item[0]
+                    )}
+
+                </div>
+
+
+                <div class="modal-value">
+
+                    ${escapeHTML(
+                        item[1]
+                    )}
+
+                </div>
+
+            `;
+
+
+            container.appendChild(div);
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "applicationModal"
+        )
+        .classList.remove(
+            "hidden"
+        );
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
+
+function closeModal() {
+
+    document
+        .getElementById(
+            "applicationModal"
+        )
+        .classList.add(
+            "hidden"
+        );
+
+}
+
+
+document
+    .getElementById(
+        "applicationModal"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === this
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(value) {
+
+    if (!value) {
+        return "-";
+    }
+
+
+    try {
+
+        const date =
+            new Date(value);
+
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return String(value);
+
+        }
+
+
+        return date.toLocaleDateString(
+            "en-IN",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+    } catch {
+
+        return String(value);
+
+    }
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function goDashboard() {
+
+    window.location.href =
+        "/dashboard";
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout() {
+
+    try {
+
+        await fetch(
+            "/logout",
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
+
+    } catch {
+
+        // Continue to login.
+
+    }
+
+
+    window.location.href =
+        "/login";
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadApplications();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

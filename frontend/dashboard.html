@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1.0"
+>
+
+<title>ScholarMatch AI</title>
+
+
+<style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0
+}
+
+
+body{
+font-family:Arial,sans-serif;
+background:#05091f;
+color:#fff;
+min-height:100vh
+}
+
+
+header{
+height:72px;
+padding:0 6%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #1c2d55;
+background:#070c27
+}
+
+
+.logo{
+font-size:25px;
+font-weight:800
+}
+
+
+.logo span,
+.hero span{
+color:#18d8d2
+}
+
+
+.nav{
+display:flex;
+gap:12px;
+align-items:center;
+flex-wrap:wrap
+}
+
+
+.welcome{
+color:#cbd3ea;
+font-size:14px
+}
+
+
+.logout,
+.my-applications{
+padding:9px 16px;
+border-radius:8px;
+cursor:pointer;
+font-weight:600
+}
+
+
+.logout{
+background:transparent;
+border:1px solid #334b87;
+color:#fff
+}
+
+
+.my-applications{
+background:linear-gradient(
+90deg,
+#2768ed,
+#12b9df
+);
+border:0;
+color:#fff
+}
+
+
+.container{
+width:90%;
+max-width:1400px;
+margin:auto;
+padding:45px 0
+}
+
+
+.badge{
+display:inline-block;
+color:#18d8d2;
+border:1px solid #147d98;
+padding:8px 13px;
+border-radius:20px;
+font-size:12px;
+margin-bottom:18px
+}
+
+
+.hero h1{
+font-size:42px;
+margin-bottom:10px
+}
+
+
+.hero p{
+color:#aab5d5;
+margin-bottom:30px
+}
+
+
+.grid{
+display:grid;
+grid-template-columns:470px 1fr;
+gap:24px
+}
+
+
+.panel{
+background:#0c163e;
+border:1px solid #263e78;
+border-radius:18px;
+padding:25px
+}
+
+
+.panel h2{
+margin-bottom:22px
+}
+
+
+.row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px
+}
+
+
+.field{
+margin-bottom:16px
+}
+
+
+label{
+display:block;
+font-size:12px;
+color:#cbd3ea;
+margin-bottom:7px
+}
+
+
+input,
+select{
+
+width:100%;
+height:44px;
+
+background:#111d48;
+
+color:white;
+
+border:1px solid #334b87;
+
+border-radius:8px;
+
+padding:0 12px
+
+}
+
+
+button{
+cursor:pointer
+}
+
+
+.search{
+width:100%;
+height:47px;
+
+border:0;
+
+border-radius:8px;
+
+background:
+linear-gradient(
+90deg,
+#2768ed,
+#12b9df
+);
+
+color:#fff;
+
+font-weight:700
+}
+
+
+.search:disabled{
+opacity:.7;
+cursor:not-allowed
+}
+
+
+.status{
+margin-bottom:15px;
+
+padding:10px;
+
+border-radius:8px;
+
+display:none
+}
+
+
+.success{
+display:block;
+
+background:#103c3a;
+
+color:#70eee0
+}
+
+
+.error{
+display:block;
+
+background:#431b2a;
+
+color:#ff9aac
+}
+
+
+.card{
+
+background:#111f4c;
+
+border:1px solid #29447c;
+
+border-radius:15px;
+
+padding:20px;
+
+margin-bottom:15px
+
+}
+
+
+.top{
+
+display:flex;
+
+justify-content:space-between;
+
+gap:15px
+
+}
+
+
+.name{
+
+font-size:17px;
+
+font-weight:700
+
+}
+
+
+.provider{
+
+font-size:12px;
+
+color:#8e9abb;
+
+margin-top:6px
+
+}
+
+
+.match{
+
+width:64px;
+
+height:64px;
+
+border:2px solid #18d8d2;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+color:#18d8d2;
+
+font-weight:700;
+
+flex-shrink:0
+
+}
+
+
+.tags{
+
+display:flex;
+
+gap:7px;
+
+flex-wrap:wrap;
+
+margin:15px 0
+
+}
+
+
+.tag{
+
+font-size:11px;
+
+padding:6px 9px;
+
+border-radius:15px;
+
+background:#0c183c;
+
+color:#b5c0dc
+
+}
+
+
+.desc{
+
+color:#aeb8d2;
+
+font-size:13px;
+
+line-height:1.6
+
+}
+
+
+.actions{
+
+display:flex;
+
+gap:10px;
+
+margin-top:16px;
+
+flex-wrap:wrap
+
+}
+
+
+.btn{
+
+padding:10px 14px;
+
+border-radius:8px;
+
+border:1px solid #31558f;
+
+background:transparent;
+
+color:#18d8d2;
+
+text-decoration:none
+
+}
+
+
+.primary{
+
+background:
+linear-gradient(
+90deg,
+#2768ed,
+#12b9df
+);
+
+color:#fff;
+
+border:0
+
+}
+
+
+.empty{
+
+text-align:center;
+
+color:#8995b7;
+
+padding:45px
+
+}
+
+
+@media(max-width:950px){
+
+.grid{
+
+grid-template-columns:1fr
+
+}
+
+}
+
+
+@media(max-width:600px){
+
+.row{
+
+grid-template-columns:1fr
+
+}
+
+
+.hero h1{
+
+font-size:32px
+
+}
+
+
+header{
+
+height:auto;
+
+padding:18px 5%;
+
+gap:15px;
+
+align-items:flex-start
+
+}
+
+
+.nav{
+
+justify-content:flex-end
+
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ======================================================
+     HEADER
+====================================================== -->
+
+<header>
+
+
+<div class="logo">
+
+Scholar<span>Match</span> AI
+
+</div>
+
+
+<div class="nav">
+
+
+<span
+id="welcome"
+class="welcome"
+>
+Welcome, Student
+</span>
+
+
+<!-- NEW: MY APPLICATIONS -->
+
+<button
+class="my-applications"
+onclick="window.location.href='/applications'"
+>
+
+📋 My Applications
+
+</button>
+
+
+<!-- LOGOUT -->
+
+<button
+class="logout"
+onclick="location.href='/logout'"
+>
+
+Logout
+
+</button>
+
+
+</div>
+
+</header>
+
+
+
+<!-- ======================================================
+     MAIN CONTENT
+====================================================== -->
+
+<main class="container">
+
+
+<div class="badge">
+
+AI-POWERED SCHOLARSHIP DISCOVERY
+
+</div>
+
+
+<section class="hero">
+
+
+<h1>
+
+Find Scholarships That
+<span>Fit You.</span>
+
+</h1>
+
+
+<p>
+
+Enter student details → get matching scholarship opportunities → start the application workflow.
+
+</p>
+
+
+</section>
+
+
+
+<div class="grid">
+
+
+<!-- ====================================================
+     STUDENT PROFILE
+===================================================== -->
+
+<section class="panel">
+
+
+<h2>
+
+Student Profile
+
+</h2>
+
+
+<div
+id="status"
+class="status"
+>
+</div>
+
+
+<form
+id="profileForm"
+>
+
+
+<!-- FULL NAME + AGE -->
+
+<div class="row">
+
+
+<div class="field">
+
+
+<label>
+Full Name
+</label>
+
+
+<input
+id="fullName"
+required
+>
+
+</div>
+
+
+
+<div class="field">
+
+
+<label>
+Age
+</label>
+
+
+<input
+id="age"
+type="number"
+min="1"
+max="100"
+required
+>
+
+</div>
+
+
+</div>
+
+
+
+<!-- STATE + COURSE -->
+
+<div class="row">
+
+
+<div class="field">
+
+
+<label>
+State
+</label>
+
+
+<select
+id="state"
+required
+>
+
+
+<option value="">
+Select State
+</option>
+
+
+<option>Andhra Pradesh</option>
+<option>Arunachal Pradesh</option>
+<option>Assam</option>
+<option>Bihar</option>
+<option>Chhattisgarh</option>
+<option>Goa</option>
+<option>Gujarat</option>
+<option>Haryana</option>
+<option>Himachal Pradesh</option>
+<option>Jharkhand</option>
+<option>Karnataka</option>
+<option>Kerala</option>
+<option>Madhya Pradesh</option>
+<option>Maharashtra</option>
+<option>Odisha</option>
+<option>Punjab</option>
+<option>Rajasthan</option>
+<option>Tamil Nadu</option>
+<option>Telangana</option>
+<option>Uttar Pradesh</option>
+<option>West Bengal</option>
+
+
+</select>
+
+</div>
+
+
+
+<div class="field">
+
+
+<label>
+Course
+</label>
+
+
+<select
+id="course"
+required
+>
+
+
+<option value="">
+Select Course
+</option>
+
+
+<option>B.Tech</option>
+<option>B.E</option>
+<option>B.Sc</option>
+<option>BCA</option>
+<option>M.Tech</option>
+<option>MCA</option>
+<option>MBA</option>
+<option>MBBS</option>
+<option>BA</option>
+<option>B.Com</option>
+
+
+</select>
+
+</div>
+
+
+</div>
+
+
+
+<!-- PERCENTAGE + INCOME -->
+
+<div class="row">
+
+
+<div class="field">
+
+
+<label>
+Academic Percentage
+</label>
+
+
+<input
+id="percentage"
+type="number"
+min="0"
+max="100"
+step="0.01"
+required
+>
+
+</div>
+
+
+
+<div class="field">
+
+
+<label>
+Annual Family Income
+</label>
+
+
+<input
+id="income"
+type="number"
+min="0"
+required
+>
+
+</div>
+
+
+</div>
+
+
+
+<!-- CATEGORY + GENDER -->
+
+<div class="row">
+
+
+<div class="field">
+
+
+<label>
+Category
+</label>
+
+
+<select
+id="category"
+required
+>
+
+
+<option value="">
+Select Category
+</option>
+
+
+<option>General</option>
+<option>OBC</option>
+<option>SC</option>
+<option>ST</option>
+<option>EWS</option>
+
+
+</select>
+
+</div>
+
+
+
+<div class="field">
+
+
+<label>
+Gender
+</label>
+
+
+<select
+id="gender"
+required
+>
+
+
+<option value="">
+Select Gender
+</option>
+
+
+<option>Female</option>
+<option>Male</option>
+<option>Other</option>
+
+
+</select>
+
+</div>
+
+
+</div>
+
+
+
+<!-- SEARCH -->
+
+<button
+class="search"
+id="searchBtn"
+type="submit"
+>
+
+Find My Scholarships →
+
+</button>
+
+
+</form>
+
+
+</section>
+
+
+
+<!-- ====================================================
+     SCHOLARSHIP MATCHES
+===================================================== -->
+
+<section class="panel">
+
+
+<div
+style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px
+"
+>
+
+
+<h2>
+
+Scholarship Matches
+
+</h2>
+
+
+<span
+style="
+color:#7e8aaa;
+font-size:12px
+"
+>
+
+2026–27 prototype
+
+</span>
+
+
+</div>
+
+
+<div
+id="results"
+>
+
+
+<div class="empty">
+
+
+Complete your profile and click
+“Find My Scholarships”.
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+</div>
+
+
+</main>
+
+
+
+<!-- ======================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+
+const $ = id =>
+document.getElementById(id);
+
+
+
+/* ======================================================
+   ESCAPE HTML
+====================================================== */
+
+function esc(value){
+
+return String(value ?? "")
+
+.replace(
+/[&<>"']/g,
+
+m => ({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[m])
+
+);
+
+}
+
+
+
+/* ======================================================
+   STATUS MESSAGE
+====================================================== */
+
+function status(message,type){
+
+$("status").textContent =
+message;
+
+$("status").className =
+"status " + type;
+
+}
+
+
+
+/* ======================================================
+   LOAD SAVED PROFILE
+====================================================== */
+
+function loadProfile(){
+
+
+fetch("/api/profile")
+
+
+.then(response =>
+response.json()
+)
+
+
+.then(data => {
+
+
+const p =
+data.profile;
+
+
+if(!p){
+
+return;
+
+}
+
+
+
+$("fullName").value =
+p.full_name || "";
+
+
+$("age").value =
+p.age || "";
+
+
+$("state").value =
+p.state || "";
+
+
+$("course").value =
+p.course || "";
+
+
+$("percentage").value =
+p.academic_percentage ?? "";
+
+
+$("income").value =
+p.annual_family_income ?? "";
+
+
+$("category").value =
+p.category || "";
+
+
+$("gender").value =
+p.gender || "";
+
+
+
+if(p.full_name){
+
+$("welcome").textContent =
+"Welcome, " +
+p.full_name;
+
+}
+
+
+})
+
+
+.catch(() => {});
+
+}
+
+
+
+/* ======================================================
+   SAVE PROFILE
+====================================================== */
+
+async function saveProfile(profile){
+
+try{
+
+
+const response =
+await fetch(
+"/api/profile",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify(profile)
+
+}
+);
+
+
+const data =
+await response.json();
+
+
+if(!response.ok){
+
+throw new Error(
+data.message ||
+"Unable to save profile."
+);
+
+}
+
+
+return true;
+
+
+}
+
+catch(error){
+
+console.error(
+"Profile save error:",
+error
+);
+
+return false;
+
+}
+
+}
+
+
+
+/* ======================================================
+   FIND SCHOLARSHIPS
+====================================================== */
+
+$("profileForm")
+.addEventListener(
+"submit",
+
+async event => {
+
+
+event.preventDefault();
+
+
+$("searchBtn").disabled =
+true;
+
+
+$("searchBtn").textContent =
+"Finding Scholarships...";
+
+
+$("results").innerHTML =
+'<div class="empty">Analyzing your profile...</div>';
+
+
+
+const profile = {
+
+
+full_name:
+$("fullName")
+.value
+.trim(),
+
+
+age:
+Number(
+$("age").value
+),
+
+
+state:
+$("state").value,
+
+
+course:
+$("course").value,
+
+
+academic_percentage:
+Number(
+$("percentage").value
+),
+
+
+annual_family_income:
+Number(
+$("income").value
+),
+
+
+category:
+$("category").value,
+
+
+gender:
+$("gender").value
+
+};
+
+
+
+try{
+
+
+/* -----------------------------------------------
+   SAVE PROFILE FIRST
+------------------------------------------------ */
+
+await saveProfile(
+profile
+);
+
+
+
+/* -----------------------------------------------
+   MATCH SCHOLARSHIPS
+------------------------------------------------ */
+
+const response =
+await fetch(
+"/api/match-scholarships",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":
+"application/json"
+},
+
+body:
+JSON.stringify(profile)
+
+}
+);
+
+
+
+const data =
+await response.json();
+
+
+
+if(!response.ok){
+
+throw new Error(
+data.message ||
+data.error ||
+"Matching failed."
+);
+
+}
+
+
+
+/* -----------------------------------------------
+   WELCOME
+------------------------------------------------ */
+
+$("welcome").textContent =
+"Welcome, " +
+profile.full_name;
+
+
+
+/* -----------------------------------------------
+   RESULTS
+------------------------------------------------ */
+
+const scholarshipList =
+data.scholarships ||
+data.results ||
+[];
+
+
+
+render(
+scholarshipList
+);
+
+
+
+status(
+
+scholarshipList.length +
+" scholarship matches found.",
+
+"success"
+
+);
+
+
+}
+
+catch(error){
+
+
+$("results").innerHTML =
+
+'<div class="empty">' +
+
+esc(error.message) +
+
+'</div>';
+
+
+
+status(
+error.message,
+"error"
+);
+
+
+}
+
+finally{
+
+
+$("searchBtn").disabled =
+false;
+
+
+$("searchBtn").textContent =
+"Find My Scholarships →";
+
+
+}
+
+});
+
+
+
+/* ======================================================
+   RENDER SCHOLARSHIPS
+====================================================== */
+
+function render(list){
+
+
+if(!list.length){
+
+
+$("results").innerHTML =
+
+'<div class="empty">' +
+
+'<h3>No matches found</h3>' +
+
+'<p style="margin-top:8px">' +
+
+'Try another profile. Some schemes need additional eligibility information.' +
+
+'</p>' +
+
+'</div>';
+
+
+return;
+
+}
+
+
+
+$("results").innerHTML =
+
+
+list.map(
+scholarship => {
+
+
+/* -----------------------------------------------
+   BACKEND COMPATIBILITY
+------------------------------------------------ */
+
+const provider =
+
+scholarship.provider ||
+
+scholarship.short_name ||
+
+"Government Scholarship";
+
+
+const officialUrl =
+
+scholarship.url ||
+
+scholarship.official_url ||
+
+"https://scholarships.gov.in/All-Scholarships";
+
+
+const reasons =
+
+scholarship.why_match ||
+
+(
+scholarship.reasons &&
+scholarship.reasons.join(" ")
+) ||
+
+"Profile information matched";
+
+
+const tags =
+
+scholarship.tags ||
+
+[];
+
+
+const matchPercentage =
+
+scholarship.match_percentage ??
+scholarship.match ??
+0;
+
+
+
+return `
+
+<div class="card">
+
+
+<div class="top">
+
+
+<div>
+
+
+<div class="name">
+
+${esc(
+scholarship.name
+)}
+
+</div>
+
+
+<div class="provider">
+
+${esc(
+provider
+)}
+
+</div>
+
+
+</div>
+
+
+<div class="match">
+
+${esc(
+matchPercentage
+)}%
+
+</div>
+
+
+</div>
+
+
+
+<div class="tags">
+
+
+${
+tags
+.map(
+tag =>
+
+`<span class="tag">
+${esc(tag)}
+</span>`
+
+)
+.join("")
+}
+
+
+
+${
+tags.length === 0
+
+?
+
+`<span class="tag">
+Eligibility Match
+</span>`
+
+:
+
+""
+
+}
+
+
+</div>
+
+
+
+<p class="desc">
+
+${esc(
+scholarship.description ||
+"Scholarship opportunity based on your profile."
+)}
+
+</p>
+
+
+
+<p
+class="desc"
+style="margin-top:10px"
+>
+
+
+<b>
+Why this matched:
+</b>
+
+
+${esc(
+reasons
+)}
+
+
+</p>
+
+
+
+<div class="actions">
+
+
+<a
+
+class="btn"
+
+href="${esc(
+officialUrl
+)}"
+
+target="_blank"
+
+rel="noopener"
+
+>
+
+View Official Website →
+
+</a>
+
+
+
+<a
+
+class="btn primary"
+
+href="/apply?scholarship_id=${encodeURIComponent(
+scholarship.id || ""
+)}&scholarship_name=${encodeURIComponent(
+scholarship.name || ""
+)}"
+
+>
+
+Apply Now →
+
+</a>
+
+
+</div>
+
+
+</div>
+
+`;
+
+}
+
+)
+.join("");
+
+}
+
+
+
+/* ======================================================
+   START
+====================================================== */
+
+loadProfile();
+
+
+</script>
+
+
+</body>
+
+</html>

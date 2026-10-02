@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login | ScholarMatch AI</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    min-height:100vh;
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            #142c73 0%,
+            #07123d 35%,
+            #03061d 75%
+        );
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+}
+
+.container{
+    width:100%;
+    max-width:1100px;
+    min-height:630px;
+
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    background:#0b153d;
+
+    border:1px solid #2a4380;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.45);
+}
+
+
+/* ================================
+   LEFT SIDE
+================================ */
+
+.left{
+    padding:70px 58px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #15285f,
+            #0a1640
+        );
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:800;
+    margin-bottom:70px;
+}
+
+.logo span{
+    color:#18d8d2;
+}
+
+.left h1{
+    font-size:48px;
+    line-height:1.05;
+    margin-bottom:25px;
+}
+
+.left h1 span{
+    color:#18d8d2;
+}
+
+.description{
+    color:#b7c3df;
+    font-size:16px;
+    line-height:1.7;
+    max-width:470px;
+    margin-bottom:35px;
+}
+
+.features{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.feature{
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    color:#cbd5ee;
+    font-size:15px;
+}
+
+.check{
+    width:27px;
+    height:27px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#18d8d2;
+
+    border:1px solid #087f9d;
+
+    background:#0b3152;
+
+    font-weight:bold;
+}
+
+
+/* ================================
+   RIGHT SIDE
+================================ */
+
+.right{
+    padding:70px 58px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.back{
+    color:#91a1c6;
+    text-decoration:none;
+    font-size:14px;
+
+    margin-bottom:40px;
+}
+
+.back:hover{
+    color:#18d8d2;
+}
+
+.right h2{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#8f9bb9;
+    margin-bottom:35px;
+}
+
+.field{
+    margin-bottom:22px;
+}
+
+label{
+    display:block;
+
+    color:#cbd4e9;
+
+    font-size:14px;
+
+    margin-bottom:9px;
+}
+
+input{
+    width:100%;
+    height:50px;
+
+    border:1px solid #38518d;
+
+    border-radius:9px;
+
+    background:#eef3fc;
+
+    color:#111827;
+
+    padding:0 15px;
+
+    font-size:15px;
+
+    outline:none;
+}
+
+input:focus{
+    border-color:#18d8d2;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(24,216,210,.12);
+}
+
+.login-btn{
+    width:100%;
+    height:50px;
+
+    border:0;
+
+    border-radius:9px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2868ed,
+            #13b8d9
+        );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    margin-top:5px;
+}
+
+.login-btn:hover{
+    opacity:.92;
+}
+
+.login-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+.message{
+    display:none;
+
+    margin-top:16px;
+
+    padding:12px 14px;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+    text-align:center;
+}
+
+.message.error{
+    display:block;
+
+    background:#351a30;
+
+    border:1px solid #70324c;
+
+    color:#ff9cae;
+}
+
+.message.success{
+    display:block;
+
+    background:#103d3a;
+
+    border:1px solid #176b66;
+
+    color:#72eee0;
+}
+
+.register{
+    text-align:center;
+
+    margin-top:28px;
+
+    color:#8f9bb9;
+
+    font-size:14px;
+}
+
+.register a{
+    color:#18d8d2;
+
+    font-weight:700;
+
+    text-decoration:none;
+}
+
+.register a:hover{
+    text-decoration:underline;
+}
+
+
+/* ================================
+   MOBILE
+================================ */
+
+@media(max-width:800px){
+
+    body{
+        padding:15px;
+    }
+
+    .container{
+        grid-template-columns:1fr;
+    }
+
+    .left{
+        padding:45px 30px;
+    }
+
+    .right{
+        padding:45px 30px;
+    }
+
+    .logo{
+        margin-bottom:35px;
+    }
+
+    .left h1{
+        font-size:38px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+    <!-- ==========================
+         LEFT
+    =========================== -->
+
+    <section class="left">
+
+        <div class="logo">
+            Scholar<span>Match</span> AI
+        </div>
+
+
+        <h1>
+            Welcome
+            <span>Back.</span>
+        </h1>
+
+
+        <p class="description">
+
+            Continue your scholarship journey.
+            Discover opportunities, understand your
+            eligibility and get ready to apply.
+
+        </p>
+
+
+        <div class="features">
+
+            <div class="feature">
+
+                <div class="check">
+                    ✓
+                </div>
+
+                <span>
+                    Personalized scholarship matching
+                </span>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="check">
+                    ✓
+                </div>
+
+                <span>
+                    AI-powered match explanations
+                </span>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="check">
+                    ✓
+                </div>
+
+                <span>
+                    Application readiness tracking
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================
+         RIGHT
+    =========================== -->
+
+    <section class="right">
+
+
+        <a
+            class="back"
+            href="/"
+        >
+            ← Back to Home
+        </a>
+
+
+        <h2>
+            Login
+        </h2>
+
+
+        <p class="subtitle">
+            Access your ScholarMatch AI dashboard.
+        </p>
+
+
+        <form id="loginForm">
+
+
+            <div class="field">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+
+            <div class="field">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+            </div>
+
+
+
+            <button
+                type="submit"
+                class="login-btn"
+                id="loginButton"
+            >
+                Login →
+            </button>
+
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+
+        </form>
+
+
+        <div class="register">
+
+            Don't have an account?
+
+            <a href="/register">
+                Create Account
+            </a>
+
+        </div>
+
+
+    </section>
+
+</div>
+
+
+
+<script>
+
+const loginForm =
+    document.getElementById("loginForm");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const message =
+    document.getElementById("message");
+
+
+function showMessage(
+    text,
+    type
+){
+
+    message.textContent = text;
+
+    message.className =
+        "message " + type;
+
+}
+
+
+loginForm.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+
+        const email =
+            document.getElementById(
+                "email"
+            ).value.trim();
+
+
+        const password =
+            document.getElementById(
+                "password"
+            ).value;
+
+
+        if(
+            !email ||
+            !password
+        ){
+
+            showMessage(
+                "Email and password are required.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+            "Logging in...";
+
+
+        message.className =
+            "message";
+
+
+        try{
+
+            const response =
+                await fetch(
+                    "/login",
+                    {
+                        method:"POST",
+
+                        headers:{
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                email:email,
+                                password:password
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if(
+                !response.ok ||
+                !data.success
+            ){
+
+                throw new Error(
+                    data.message ||
+                    "Login failed."
+                );
+
+            }
+
+
+            showMessage(
+                "Login successful. Redirecting...",
+                "success"
+            );
+
+
+            setTimeout(
+                function(){
+
+                    window.location.href =
+                        data.redirect ||
+                        "/dashboard";
+
+                },
+                500
+            );
+
+
+        }
+        catch(error){
+
+            showMessage(
+                error.message ||
+                "Unable to login.",
+                "error"
+            );
+
+        }
+        finally{
+
+            loginButton.disabled =
+                false;
+
+            loginButton.textContent =
+                "Login →";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

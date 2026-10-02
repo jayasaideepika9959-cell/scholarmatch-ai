@@ -1,0 +1,3121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ScholarMatch AI - Application</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #071126;
+            color: white;
+        }
+
+        header {
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 6%;
+            background: #0b1734;
+            border-bottom: 1px solid #20345f;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #18d8d2;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn,
+        .logout-btn {
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .back-btn {
+            background: #17284e;
+            color: white;
+        }
+
+        .logout-btn {
+            background: #26385f;
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 35px auto 70px;
+        }
+
+        .hero {
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: #102550;
+            color: #18d8d2;
+            border: 1px solid #244276;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin: 15px 0 8px;
+        }
+
+        .hero p {
+            color: #9eabc9;
+            line-height: 1.6;
+        }
+
+        /* STEPPER */
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin: 30px 0;
+        }
+
+        .step {
+            text-align: center;
+            padding: 12px 5px;
+            border-radius: 8px;
+            background: #101e40;
+            color: #7f8eaf;
+            font-size: 12px;
+            border: 1px solid #1d3159;
+        }
+
+        .step.active {
+            color: white;
+            background: #15345d;
+            border-color: #18d8d2;
+        }
+
+        .step.done {
+            color: #18d8d2;
+        }
+
+        /* CARD */
+
+        .card {
+            background: #0d1935;
+            border: 1px solid #20345f;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 22px;
+        }
+
+        .subtitle {
+            color: #8e9bb9;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* FORM */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 22px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 13px;
+            color: #aebbd5;
+            font-weight: 600;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border-radius: 9px;
+            border: 1px solid #2a4271;
+            background: #09152e;
+            color: white;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #18d8d2;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* REQUIREMENTS */
+
+        .requirements-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: #0a1732;
+            border: 1px solid #243b69;
+            border-radius: 12px;
+        }
+
+        .requirements-title {
+            color: #18d8d2;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .requirement-item {
+            padding: 13px;
+            margin-bottom: 10px;
+            background: #101f40;
+            border-radius: 9px;
+            border-left: 3px solid #2768ed;
+        }
+
+        .requirement-item strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .requirement-item span {
+            color: #929fbd;
+            font-size: 12px;
+        }
+
+        /* DOCUMENTS */
+
+        .documents {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .document-card {
+            background: #0a1730;
+            border: 1px solid #243a67;
+            border-radius: 11px;
+            padding: 16px;
+        }
+
+        .document-card.required {
+            border-left: 3px solid #18d8d2;
+        }
+
+        .document-card.optional {
+            border-left: 3px solid #6e7d9e;
+        }
+
+        .document-title {
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .document-info {
+            color: #8492b2;
+            font-size: 11px;
+            margin-bottom: 10px;
+        }
+
+        input[type="file"] {
+            padding: 9px;
+        }
+
+        /* BUTTONS */
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+            gap: 12px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 9px;
+            padding: 13px 22px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: linear-gradient(90deg, #2768ed, #12b9df);
+            color: white;
+        }
+
+        .secondary {
+            background: #17284c;
+            color: white;
+        }
+
+        .success-btn {
+            background: #18a88e;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* REVIEW */
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .review-item {
+            background: #0a1730;
+            border: 1px solid #21365f;
+            padding: 14px;
+            border-radius: 9px;
+        }
+
+        .review-item small {
+            color: #7f8eac;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .review-item strong {
+            color: white;
+        }
+
+        .review-full {
+            grid-column: 1 / -1;
+        }
+
+        /* OTP */
+
+        .otp-box {
+            max-width: 450px;
+            margin: 30px auto;
+            text-align: center;
+        }
+
+        .otp-input {
+            text-align: center;
+            font-size: 26px;
+            letter-spacing: 10px;
+            margin-top: 20px;
+        }
+
+        /* READY */
+
+        .ready {
+            text-align: center;
+            padding: 45px 20px;
+        }
+
+        .success-icon {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: #123f43;
+            border: 2px solid #18d8d2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+            color: #18d8d2;
+        }
+
+        .application-id {
+            margin: 20px auto;
+            max-width: 400px;
+            padding: 18px;
+            border-radius: 10px;
+            background: #101f40;
+            border: 1px solid #2b4779;
+        }
+
+        .official-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: #102440;
+            border: 1px solid #24527b;
+            border-radius: 11px;
+        }
+
+        .official-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 13px 20px;
+            border-radius: 8px;
+            background: #18d8d2;
+            color: #061126;
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        .note {
+            color: #8997b5;
+            font-size: 12px;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        /* STATUS */
+
+        .status {
+            display: none;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+
+        .status.error {
+            display: block;
+            background: #3a1825;
+            color: #ff9eaf;
+            border: 1px solid #703247;
+        }
+
+        .status.success {
+            display: block;
+            background: #10352f;
+            color: #79e6d2;
+            border: 1px solid #236c60;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 750px) {
+
+            .steps {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .form-grid,
+            .documents,
+            .review-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .review-full {
+                grid-column: auto;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .header-right {
+                gap: 5px;
+            }
+
+            .back-btn {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <div class="logo">
+        Scholar<span>Match</span> AI
+    </div>
+
+    <div class="header-right">
+
+        <button class="back-btn" onclick="goDashboard()">
+            ← Dashboard
+        </button>
+
+        <button class="logout-btn" onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <section class="hero">
+
+        <div class="badge">
+            SCHOLARSHIP APPLICATION
+        </div>
+
+        <h1>
+            Prepare Your Application
+        </h1>
+
+        <p>
+            ScholarMatch creates a scholarship-specific application
+            checklist based on the scheme you selected.
+        </p>
+
+    </section>
+
+
+    <!-- STEPS -->
+
+    <div class="steps">
+
+        <div class="step active" id="step1">1. Scholarship</div>
+
+        <div class="step" id="step2">2. Details</div>
+
+        <div class="step" id="step3">3. Documents</div>
+
+        <div class="step" id="step4">4. Review</div>
+
+        <div class="step" id="step5">5. OTP</div>
+
+        <div class="step" id="step6">6. Ready</div>
+
+    </div>
+
+
+    <div id="status" class="status"></div>
+
+
+    <!-- =====================================================
+         STEP 1
+    ====================================================== -->
+
+    <section id="screen1" class="card">
+
+        <h2>Selected Scholarship</h2>
+
+        <p class="subtitle">
+            Your selected scholarship is shown below.
+            The application requirements will automatically change
+            according to the selected scholarship.
+        </p>
+
+
+        <div class="requirements-box">
+
+            <div class="requirements-title">
+                Scholarship
+            </div>
+
+            <h3 id="scholarshipName">
+                Loading scholarship...
+            </h3>
+
+            <p id="scholarshipDescription" class="subtitle">
+            </p>
+
+        </div>
+
+
+        <div class="requirements-box">
+
+            <div class="requirements-title">
+                Scholarship-specific requirements
+            </div>
+
+            <div id="requirementsList">
+            </div>
+
+        </div>
+
+
+        <div class="actions">
+
+            <button class="btn secondary" onclick="goDashboard()">
+                ← Back
+            </button>
+
+            <button class="btn primary" onclick="goStep(2)">
+                Continue →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STEP 2
+    ====================================================== -->
+
+    <section id="screen2" class="card hidden">
+
+        <h2>Student Details</h2>
+
+        <p class="subtitle">
+            Your saved profile details are automatically filled.
+            You can edit them before creating the application.
+        </p>
+
+
+        <div class="form-grid">
+
+
+            <div class="field">
+
+                <label>Full Name *</label>
+
+                <input
+                    id="full_name"
+                    type="text"
+                    placeholder="Enter full name"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Age *</label>
+
+                <input
+                    id="age"
+                    type="number"
+                    min="1"
+                    max="100"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>State *</label>
+
+                <select id="state">
+
+                    <option value="">Select State</option>
+
+                    <option>Andhra Pradesh</option>
+                    <option>Arunachal Pradesh</option>
+                    <option>Assam</option>
+                    <option>Bihar</option>
+                    <option>Chhattisgarh</option>
+                    <option>Delhi</option>
+                    <option>Goa</option>
+                    <option>Gujarat</option>
+                    <option>Haryana</option>
+                    <option>Himachal Pradesh</option>
+                    <option>Jharkhand</option>
+                    <option>Karnataka</option>
+                    <option>Kerala</option>
+                    <option>Madhya Pradesh</option>
+                    <option>Maharashtra</option>
+                    <option>Odisha</option>
+                    <option>Punjab</option>
+                    <option>Rajasthan</option>
+                    <option>Tamil Nadu</option>
+                    <option>Telangana</option>
+                    <option>Uttar Pradesh</option>
+                    <option>Uttarakhand</option>
+                    <option>West Bengal</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Course *</label>
+
+                <select id="course">
+
+                    <option value="">Select Course</option>
+
+                    <option>B.Tech</option>
+                    <option>B.E</option>
+                    <option>B.Sc</option>
+                    <option>BCA</option>
+                    <option>M.Tech</option>
+                    <option>MCA</option>
+                    <option>MBA</option>
+                    <option>MBBS</option>
+                    <option>BA</option>
+                    <option>B.Com</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Academic Percentage *</label>
+
+                <input
+                    id="academic_percentage"
+                    type="number"
+                    min="0"
+                    max="100"
+                    step="0.01"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Annual Family Income *</label>
+
+                <input
+                    id="annual_family_income"
+                    type="number"
+                    min="0"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Category *</label>
+
+                <select id="category">
+
+                    <option value="">Select Category</option>
+
+                    <option>General</option>
+                    <option>OBC</option>
+                    <option>SC</option>
+                    <option>ST</option>
+                    <option>EWS</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Gender *</label>
+
+                <select id="gender">
+
+                    <option value="">Select Gender</option>
+
+                    <option>Female</option>
+                    <option>Male</option>
+                    <option>Other</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Email *</label>
+
+                <input
+                    id="email"
+                    type="email"
+                    placeholder="student@example.com"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Phone *</label>
+
+                <input
+                    id="phone"
+                    type="tel"
+                    placeholder="10-digit mobile number"
+                >
+
+            </div>
+
+
+            <div class="field full">
+
+                <label>College / Institution *</label>
+
+                <input
+                    id="college"
+                    type="text"
+                    placeholder="Enter college name"
+                >
+
+            </div>
+
+
+            <!-- DYNAMIC FIELDS -->
+
+            <div
+                id="dynamicFields"
+                class="field full"
+            >
+            </div>
+
+
+            <div class="field full">
+
+                <label>Additional Details</label>
+
+                <textarea
+                    id="additional_details"
+                    placeholder="Enter any additional information..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="btn secondary"
+                onclick="goStep(1)"
+            >
+                ← Back
+            </button>
+
+            <button
+                class="btn primary"
+                onclick="validateDetailsAndContinue()"
+            >
+                Continue to Documents →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STEP 3
+    ====================================================== -->
+
+    <section id="screen3" class="card hidden">
+
+        <h2>Required Documents</h2>
+
+        <p class="subtitle">
+            Documents are displayed according to the selected
+            scholarship. Required documents must be uploaded.
+        </p>
+
+
+        <div
+            id="documentsContainer"
+            class="documents"
+        >
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="btn secondary"
+                onclick="goStep(2)"
+            >
+                ← Back
+            </button>
+
+            <button
+                class="btn primary"
+                onclick="validateDocumentsAndContinue()"
+            >
+                Continue to Review →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STEP 4
+    ====================================================== -->
+
+    <section id="screen4" class="card hidden">
+
+        <h2>Review Application</h2>
+
+        <p class="subtitle">
+            Carefully review your information before creating
+            the application.
+        </p>
+
+
+        <div id="reviewContent" class="review-grid">
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                class="btn secondary"
+                onclick="goStep(3)"
+            >
+                ← Back
+            </button>
+
+            <button
+                id="createApplicationButton"
+                class="btn success-btn"
+                onclick="createApplication()"
+            >
+                Create Application
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STEP 5
+    ====================================================== -->
+
+    <section id="screen5" class="card hidden">
+
+        <div class="otp-box">
+
+            <h2>Demo OTP Verification</h2>
+
+            <p class="subtitle">
+
+                For this prototype, use the demo OTP:
+
+            </p>
+
+
+            <h2 style="color:#18d8d2;">
+                123456
+            </h2>
+
+
+            <input
+                id="otp"
+                class="otp-input"
+                type="text"
+                maxlength="6"
+                placeholder="123456"
+            >
+
+
+            <div class="actions">
+
+                <button
+                    class="btn secondary"
+                    onclick="goStep(4)"
+                >
+                    ← Back
+                </button>
+
+                <button
+                    class="btn primary"
+                    onclick="verifyOTP()"
+                >
+                    Verify OTP
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         STEP 6
+    ====================================================== -->
+
+    <section id="screen6" class="card hidden">
+
+        <div class="ready">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Application Ready
+            </h2>
+
+            <p class="subtitle">
+                Your ScholarMatch application preparation is complete.
+            </p>
+
+
+            <div class="application-id">
+
+                <div style="color:#8492b2;font-size:12px;">
+                    DEMO APPLICATION ID
+                </div>
+
+                <strong
+                    id="applicationId"
+                    style="
+                        display:block;
+                        margin-top:8px;
+                        color:#18d8d2;
+                        font-size:20px;
+                    "
+                >
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="official-box">
+
+                <h3>
+                    Continue on Official NSP
+                </h3>
+
+                <p class="subtitle">
+
+                    This ScholarMatch prototype does not submit
+                    applications directly to the government.
+
+                    Please verify the final eligibility,
+                    documents and application details on the
+                    official National Scholarship Portal.
+
+                </p>
+
+
+                <a
+                    class="official-link"
+                    href="https://scholarships.gov.in/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Open Official NSP →
+                </a>
+
+            </div>
+
+
+            <p class="note">
+
+                Important: Scholarship requirements can change.
+                Always follow the current official scheme
+                instructions before final submission.
+
+            </p>
+
+
+            <div class="actions">
+
+                <button
+                    class="btn secondary"
+                    onclick="goDashboard()"
+                >
+                    Return to Dashboard
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script>
+
+
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
+
+let selectedScholarshipId = "";
+let selectedScholarshipName = "";
+let selectedScholarshipDescription = "";
+let selectedRequirements = null;
+let createdApplicationId = "";
+
+
+/*
+    Common document keys used by the existing Flask backend.
+    We only show/hide them depending on the selected scholarship.
+*/
+
+const DOCUMENT_DEFINITIONS = {
+
+    identity_proof: {
+        title: "Identity Proof",
+        description: "A valid identity document.",
+        required: true
+    },
+
+    marks_memo: {
+        title: "Marks Memo",
+        description: "Latest academic marks / qualifying examination proof.",
+        required: true
+    },
+
+    income_certificate: {
+        title: "Income Certificate",
+        description: "Current family income certificate where applicable.",
+        required: true
+    },
+
+    category_certificate: {
+        title: "Category Certificate",
+        description: "Category certificate if applicable.",
+        required: false
+    },
+
+    bonafide_certificate: {
+        title: "Bonafide Certificate",
+        description: "Certificate from the educational institution.",
+        required: true
+    },
+
+    bank_document: {
+        title: "Bank Document",
+        description: "Bank account proof / passbook where required.",
+        required: false
+    },
+
+    photograph: {
+        title: "Photograph",
+        description: "Recent passport-size photograph.",
+        required: true
+    }
+
+};
+
+
+/*
+    Scholarship-specific prototype requirements.
+
+    These are application-preparation fields/checklists.
+    Final requirements must always be checked against
+    the current official NSP scheme instructions.
+*/
+
+const SCHOLARSHIP_REQUIREMENTS = {
+
+    "pragati-degree": {
+
+        description:
+            "AICTE Pragati Technical Degree Scholarship.",
+
+        fields: [
+
+            {
+                id: "technical_institution",
+                label: "Technical Institution",
+                type: "text",
+                placeholder: "Enter AICTE-approved institution"
+            },
+
+            {
+                id: "year_of_study",
+                label: "Year of Study",
+                type: "select",
+                options: [
+                    "1st Year",
+                    "2nd Year",
+                    "3rd Year",
+                    "4th Year"
+                ]
+            }
+
+        ],
+
+        documents: [
+            "identity_proof",
+            "marks_memo",
+            "income_certificate",
+            "bonafide_certificate",
+            "bank_document",
+            "photograph"
+        ]
+
+    },
+
+
+    "pm-usp-csss": {
+
+        description:
+            "Central Sector Scheme of Scholarship for College and University Students.",
+
+        fields: [
+
+            {
+                id: "year_of_study",
+                label: "Year of Study",
+                type: "select",
+                options: [
+                    "1st Year",
+                    "2nd Year",
+                    "3rd Year",
+                    "4th Year",
+                    "5th Year"
+                ]
+            },
+
+            {
+                id: "previous_qualification",
+                label: "Previous Qualification",
+                type: "text",
+                placeholder: "Example: Intermediate / Class 12"
+            }
+
+        ],
+
+        documents: [
+            "identity_proof",
+            "marks_memo",
+            "income_certificate",
+            "bonafide_certificate",
+            "bank_document",
+            "photograph"
+        ]
+
+    },
+
+
+    "yasasvi-college": {
+
+        description:
+            "PM YASASVI Top Class Education support for eligible OBC/EBC/DNT students.",
+
+        fields: [
+
+            {
+                id: "social_category",
+                label: "Social Category",
+                type: "select",
+                options: [
+                    "OBC",
+                    "EBC",
+                    "DNT"
+                ]
+            },
+
+            {
+                id: "year_of_study",
+                label: "Year of Study",
+                type: "select",
+                options: [
+                    "1st Year",
+                    "2nd Year",
+                    "3rd Year",
+                    "4th Year"
+                ]
+            }
+
+        ],
+
+        documents: [
+            "identity_proof",
+            "marks_memo",
+            "income_certificate",
+            "category_certificate",
+            "bonafide_certificate",
+            "bank_document",
+            "photograph"
+        ]
+
+    },
+
+
+    "sc-top-class": {
+
+        description:
+            "Top Class Education scholarship support for eligible SC students.",
+
+        fields: [
+
+            {
+                id: "social_category",
+                label: "Social Category",
+                type: "select",
+                options: [
+                    "SC"
+                ]
+            },
+
+            {
+                id: "year_of_study",
+                label: "Year of Study",
+                type: "select",
+                options: [
+                    "1st Year",
+                    "2nd Year",
+                    "3rd Year",
+                    "4th Year"
+                ]
+            }
+
+        ],
+
+        documents: [
+            "identity_proof",
+            "marks_memo",
+            "income_certificate",
+            "category_certificate",
+            "bonafide_certificate",
+            "bank_document",
+            "photograph"
+        ]
+
+    },
+
+
+    "st-higher-education": {
+
+        description:
+            "National scholarship support for eligible ST students in higher education.",
+
+        fields: [
+
+            {
+                id: "social_category",
+                label: "Social Category",
+                type: "select",
+                options: [
+                    "ST"
+                ]
+            },
+
+            {
+                id: "year_of_study",
+                label: "Year of Study",
+                type: "select",
+                options: [
+                    "1st Year",
+                    "2nd Year",
+                    "3rd Year",
+                    "4th Year"
+                ]
+            }
+
+        ],
+
+        documents: [
+            "identity_proof",
+            "marks_memo",
+            "income_certificate",
+            "category_certificate",
+            "bonafide_certificate",
+            "bank_document",
+            "photograph"
+        ]
+
+    },
+
+
+    "disability-post-matric": {
+
+        description:
+            "Post Matric Scholarship support for eligible students with disabilities.",
+
+        fields: [
+
+            {
+                id: "disability_percentage",
+                label: "Disability Percentage",
+                type: "number",
+                placeholder: "Enter percentage"
+            },
+
+            {
+                id: "udid_number",
+                label: "UDID Number",
+                type: "text",
+                placeholder: "Enter UDID number"
+            }
+
+        ],
+
+        documents: [
+            "identity_proof",
+            "marks_memo",
+            "income_certificate",
+            "category_certificate",
+            "bonafide_certificate",
+            "bank_document",
+            "photograph"
+        ]
+
+    },
+
+
+    "ishan-uday": {
+
+        description:
+            "Ishan Uday scholarship for eligible students from the North Eastern Region.",
+
+        fields: [
+
+            {
+                id: "domicile_state",
+                label: "Domicile State",
+                type: "select",
+                options: [
+                    "Arunachal Pradesh",
+                    "Assam",
+                    "Manipur",
+                    "Meghalaya",
+                    "Mizoram",
+                    "Nagaland",
+                    "Sikkim",
+                    "Tripura"
+                ]
+            },
+
+            {
+                id: "year_of_study",
+                label: "Year of Study",
+                type: "select",
+                options: [
+                    "1st Year",
+                    "2nd Year",
+                    "3rd Year",
+                    "4th Year"
+                ]
+            }
+
+        ],
+
+        documents: [
+            "identity_proof",
+            "marks_memo",
+            "income_certificate",
+            "bonafide_certificate",
+            "bank_document",
+            "photograph"
+        ]
+
+    },
+
+
+    "swanath": {
+
+        description:
+            "AICTE Swanath Technical Degree scholarship support.",
+
+        fields: [
+
+            {
+                id: "year_of_study",
+                label: "Year of Study",
+                type: "select",
+                options: [
+                    "1st Year",
+                    "2nd Year",
+                    "3rd Year",
+                    "4th Year"
+                ]
+            },
+
+            {
+                id: "special_status",
+                label: "Special Eligibility Information",
+                type: "textarea",
+                placeholder:
+                    "Enter the relevant background/status information for this scheme."
+            }
+
+        ],
+
+        documents: [
+            "identity_proof",
+            "marks_memo",
+            "income_certificate",
+            "bonafide_certificate",
+            "bank_document",
+            "photograph"
+        ]
+
+    }
+
+};
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", async function() {
+
+    readScholarshipFromURL();
+
+    await loadProfile();
+
+    renderScholarshipInformation();
+
+});
+
+
+/* =========================================================
+   READ SCHOLARSHIP
+========================================================= */
+
+function readScholarshipFromURL() {
+
+    const params = new URLSearchParams(
+        window.location.search
+    );
+
+    selectedScholarshipId =
+        params.get("scholarship_id") || "";
+
+    selectedScholarshipName =
+        params.get("scholarship_name") || "Selected Scholarship";
+
+
+    /*
+        Decode scholarship name safely.
+    */
+
+    try {
+
+        selectedScholarshipName =
+            decodeURIComponent(selectedScholarshipName);
+
+    } catch {
+
+        // Keep original value.
+
+    }
+
+
+    selectedRequirements =
+        SCHOLARSHIP_REQUIREMENTS[selectedScholarshipId]
+        || getDefaultRequirements();
+
+}
+
+
+/* =========================================================
+   DEFAULT REQUIREMENTS
+========================================================= */
+
+function getDefaultRequirements() {
+
+    return {
+
+        description:
+            "Scholarship application requirements.",
+
+        fields: [],
+
+        documents: [
+            "identity_proof",
+            "marks_memo",
+            "income_certificate",
+            "bonafide_certificate",
+            "photograph"
+        ]
+
+    };
+
+}
+
+
+/* =========================================================
+   RENDER SCHOLARSHIP
+========================================================= */
+
+function renderScholarshipInformation() {
+
+    document.getElementById(
+        "scholarshipName"
+    ).textContent =
+        selectedScholarshipName;
+
+
+    document.getElementById(
+        "scholarshipDescription"
+    ).textContent =
+        selectedRequirements.description;
+
+
+    renderRequirements();
+
+    renderDynamicFields();
+
+    renderDocuments();
+
+}
+
+
+/* =========================================================
+   RENDER REQUIREMENTS
+========================================================= */
+
+function renderRequirements() {
+
+    const container =
+        document.getElementById("requirementsList");
+
+    container.innerHTML = "";
+
+
+    if (
+        !selectedRequirements.fields ||
+        !selectedRequirements.fields.length
+    ) {
+
+        container.innerHTML = `
+            <div class="requirement-item">
+                <strong>Standard Scholarship Application</strong>
+                <span>
+                    Common student details and standard documents
+                    will be collected.
+                </span>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    selectedRequirements.fields.forEach(function(field) {
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "requirement-item";
+
+        div.innerHTML = `
+            <strong>${escapeHTML(field.label)}</strong>
+            <span>
+                This scholarship requires additional information:
+                ${escapeHTML(field.label)}
+            </span>
+        `;
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+/* =========================================================
+   DYNAMIC FIELDS
+========================================================= */
+
+function renderDynamicFields() {
+
+    const container =
+        document.getElementById("dynamicFields");
+
+    container.innerHTML = "";
+
+
+    if (
+        !selectedRequirements.fields ||
+        !selectedRequirements.fields.length
+    ) {
+
+        return;
+
+    }
+
+
+    const wrapper =
+        document.createElement("div");
+
+    wrapper.className =
+        "requirements-box";
+
+    wrapper.style.marginTop = "0";
+
+
+    wrapper.innerHTML = `
+        <div class="requirements-title">
+            Scholarship-specific details
+        </div>
+    `;
+
+
+    const grid =
+        document.createElement("div");
+
+    grid.className =
+        "form-grid";
+
+
+    selectedRequirements.fields.forEach(function(field) {
+
+        const fieldWrapper =
+            document.createElement("div");
+
+        fieldWrapper.className =
+            "field";
+
+
+        let control = "";
+
+
+        if (field.type === "select") {
+
+            control = `
+                <select id="${escapeAttribute(field.id)}">
+                    <option value="">
+                        Select ${escapeHTML(field.label)}
+                    </option>
+
+                    ${
+                        (field.options || [])
+                        .map(option =>
+                            `<option value="${escapeAttribute(option)}">
+                                ${escapeHTML(option)}
+                            </option>`
+                        )
+                        .join("")
+                    }
+
+                </select>
+            `;
+
+        }
+
+        else if (field.type === "textarea") {
+
+            control = `
+                <textarea
+                    id="${escapeAttribute(field.id)}"
+                    placeholder="${escapeAttribute(field.placeholder || "")}"
+                ></textarea>
+            `;
+
+        }
+
+        else {
+
+            control = `
+                <input
+                    id="${escapeAttribute(field.id)}"
+                    type="${escapeAttribute(field.type || "text")}"
+                    placeholder="${escapeAttribute(field.placeholder || "")}"
+                >
+            `;
+
+        }
+
+
+        fieldWrapper.innerHTML = `
+            <label>
+                ${escapeHTML(field.label)} *
+            </label>
+
+            ${control}
+        `;
+
+
+        grid.appendChild(fieldWrapper);
+
+    });
+
+
+    wrapper.appendChild(grid);
+
+    container.appendChild(wrapper);
+
+}
+
+
+/* =========================================================
+   DOCUMENTS
+========================================================= */
+
+function renderDocuments() {
+
+    const container =
+        document.getElementById("documentsContainer");
+
+    container.innerHTML = "";
+
+
+    const documentKeys =
+        selectedRequirements.documents || [];
+
+
+    documentKeys.forEach(function(key) {
+
+        const definition =
+            DOCUMENT_DEFINITIONS[key];
+
+        if (!definition) {
+            return;
+        }
+
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "document-card " +
+            (
+                definition.required
+                ? "required"
+                : "optional"
+            );
+
+
+        card.innerHTML = `
+
+            <div class="document-title">
+
+                ${escapeHTML(definition.title)}
+
+                ${
+                    definition.required
+                    ? '<span style="color:#18d8d2;"> *</span>'
+                    : '<span style="color:#7d8ba8;"> (Optional)</span>'
+                }
+
+            </div>
+
+
+            <div class="document-info">
+
+                ${escapeHTML(definition.description)}
+
+            </div>
+
+
+            <input
+                type="file"
+                id="file_${escapeAttribute(key)}"
+                data-document="${escapeAttribute(key)}"
+                accept=".pdf,.jpg,.jpeg,.png"
+                ${definition.required ? "required" : ""}
+            >
+
+        `;
+
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   LOAD PROFILE
+========================================================= */
+
+async function loadProfile() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/profile",
+                {
+                    method: "GET",
+                    credentials: "include"
+                }
+            );
+
+
+        if (!response.ok) {
+            return;
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const profile =
+            data.profile || data;
+
+
+        if (!profile) {
+            return;
+        }
+
+
+        setValue(
+            "full_name",
+            profile.full_name || profile.name
+        );
+
+        setValue(
+            "age",
+            profile.age
+        );
+
+        setValue(
+            "state",
+            profile.state
+        );
+
+        setValue(
+            "course",
+            profile.course
+        );
+
+        setValue(
+            "academic_percentage",
+            profile.academic_percentage ??
+            profile.percentage
+        );
+
+        setValue(
+            "annual_family_income",
+            profile.annual_family_income ??
+            profile.income
+        );
+
+        setValue(
+            "category",
+            profile.category
+        );
+
+        setValue(
+            "gender",
+            profile.gender
+        );
+
+        setValue(
+            "email",
+            profile.email
+        );
+
+        setValue(
+            "phone",
+            profile.phone
+        );
+
+        setValue(
+            "college",
+            profile.college
+        );
+
+
+    } catch (error) {
+
+        console.log(
+            "Profile loading skipped.",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   SET VALUE
+========================================================= */
+
+function setValue(id, value) {
+
+    if (
+        value === undefined ||
+        value === null
+    ) {
+        return;
+    }
+
+
+    const element =
+        document.getElementById(id);
+
+
+    if (element) {
+
+        element.value = value;
+
+    }
+
+}
+
+
+/* =========================================================
+   STEP NAVIGATION
+========================================================= */
+
+function goStep(stepNumber) {
+
+    for (
+        let i = 1;
+        i <= 6;
+        i++
+    ) {
+
+        const screen =
+            document.getElementById(
+                "screen" + i
+            );
+
+        const step =
+            document.getElementById(
+                "step" + i
+            );
+
+
+        if (screen) {
+
+            screen.classList.add("hidden");
+
+        }
+
+
+        if (step) {
+
+            step.classList.remove(
+                "active"
+            );
+
+            step.classList.remove(
+                "done"
+            );
+
+        }
+
+    }
+
+
+    const currentScreen =
+        document.getElementById(
+            "screen" + stepNumber
+        );
+
+    const currentStep =
+        document.getElementById(
+            "step" + stepNumber
+        );
+
+
+    if (currentScreen) {
+
+        currentScreen.classList.remove(
+            "hidden"
+        );
+
+    }
+
+
+    if (currentStep) {
+
+        currentStep.classList.add(
+            "active"
+        );
+
+    }
+
+
+    for (
+        let i = 1;
+        i < stepNumber;
+        i++
+    ) {
+
+        const completed =
+            document.getElementById(
+                "step" + i
+            );
+
+        if (completed) {
+
+            completed.classList.add(
+                "done"
+            );
+
+        }
+
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =========================================================
+   VALIDATE STUDENT DETAILS
+========================================================= */
+
+function validateDetailsAndContinue() {
+
+    clearStatus();
+
+
+    const requiredFields = [
+
+        ["full_name", "Full Name"],
+
+        ["age", "Age"],
+
+        ["state", "State"],
+
+        ["course", "Course"],
+
+        ["academic_percentage", "Academic Percentage"],
+
+        ["annual_family_income", "Annual Family Income"],
+
+        ["category", "Category"],
+
+        ["gender", "Gender"],
+
+        ["email", "Email"],
+
+        ["phone", "Phone"],
+
+        ["college", "College / Institution"]
+
+    ];
+
+
+    for (const item of requiredFields) {
+
+        const element =
+            document.getElementById(item[0]);
+
+
+        if (
+            !element ||
+            !element.value.trim()
+        ) {
+
+            showStatus(
+                "Please enter " + item[1] + ".",
+                "error"
+            );
+
+            element?.focus();
+
+            return;
+
+        }
+
+    }
+
+
+    const percentage =
+        Number(
+            document.getElementById(
+                "academic_percentage"
+            ).value
+        );
+
+
+    if (
+        percentage < 0 ||
+        percentage > 100
+    ) {
+
+        showStatus(
+            "Academic percentage must be between 0 and 100.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /*
+        Validate scholarship-specific fields.
+    */
+
+    if (
+        selectedRequirements.fields
+    ) {
+
+        for (
+            const field
+            of selectedRequirements.fields
+        ) {
+
+            const element =
+                document.getElementById(
+                    field.id
+                );
+
+
+            if (
+                !element ||
+                !element.value.trim()
+            ) {
+
+                showStatus(
+                    "Please enter " +
+                    field.label +
+                    ".",
+                    "error"
+                );
+
+                element?.focus();
+
+                return;
+
+            }
+
+        }
+
+    }
+
+
+    goStep(3);
+
+}
+
+
+/* =========================================================
+   VALIDATE DOCUMENTS
+========================================================= */
+
+function validateDocumentsAndContinue() {
+
+    clearStatus();
+
+
+    const requiredDocuments =
+        selectedRequirements.documents
+        .filter(function(key) {
+
+            return DOCUMENT_DEFINITIONS[key]?.required;
+
+        });
+
+
+    for (
+        const documentKey
+        of requiredDocuments
+    ) {
+
+        const input =
+            document.getElementById(
+                "file_" + documentKey
+            );
+
+
+        if (
+            !input ||
+            !input.files ||
+            !input.files.length
+        ) {
+
+            showStatus(
+                "Please upload " +
+                DOCUMENT_DEFINITIONS[documentKey].title +
+                ".",
+                "error"
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    renderReview();
+
+    goStep(4);
+
+}
+
+
+/* =========================================================
+   COLLECT FORM DATA
+========================================================= */
+
+function collectStudentData() {
+
+    const data = {
+
+        full_name:
+            getValue("full_name"),
+
+        age:
+            Number(getValue("age")),
+
+        state:
+            getValue("state"),
+
+        course:
+            getValue("course"),
+
+        academic_percentage:
+            Number(
+                getValue(
+                    "academic_percentage"
+                )
+            ),
+
+        annual_family_income:
+            Number(
+                getValue(
+                    "annual_family_income"
+                )
+            ),
+
+        category:
+            getValue("category"),
+
+        gender:
+            getValue("gender"),
+
+        email:
+            getValue("email"),
+
+        phone:
+            getValue("phone"),
+
+        college:
+            getValue("college"),
+
+        additional_details:
+            getValue("additional_details")
+
+    };
+
+
+    /*
+        Store scholarship-specific fields
+        inside additional_details.
+
+        This lets us keep the existing database
+        structure without changing the database.
+    */
+
+    const extra = {};
+
+
+    if (
+        selectedRequirements.fields
+    ) {
+
+        selectedRequirements.fields.forEach(
+            function(field) {
+
+                const element =
+                    document.getElementById(
+                        field.id
+                    );
+
+
+                if (element) {
+
+                    extra[field.id] =
+                        element.value;
+
+                }
+
+            }
+        );
+
+    }
+
+
+    data.scholarship_specific_details =
+        extra;
+
+
+    return data;
+
+}
+
+
+/* =========================================================
+   REVIEW
+========================================================= */
+
+function renderReview() {
+
+    const data =
+        collectStudentData();
+
+
+    const container =
+        document.getElementById(
+            "reviewContent"
+        );
+
+
+    container.innerHTML = "";
+
+
+    addReviewItem(
+        container,
+        "Scholarship",
+        selectedScholarshipName
+    );
+
+
+    addReviewItem(
+        container,
+        "Full Name",
+        data.full_name
+    );
+
+
+    addReviewItem(
+        container,
+        "Age",
+        data.age
+    );
+
+
+    addReviewItem(
+        container,
+        "State",
+        data.state
+    );
+
+
+    addReviewItem(
+        container,
+        "Course",
+        data.course
+    );
+
+
+    addReviewItem(
+        container,
+        "Academic Percentage",
+        data.academic_percentage + "%"
+    );
+
+
+    addReviewItem(
+        container,
+        "Annual Family Income",
+        "₹ " +
+        Number(
+            data.annual_family_income
+        ).toLocaleString("en-IN")
+    );
+
+
+    addReviewItem(
+        container,
+        "Category",
+        data.category
+    );
+
+
+    addReviewItem(
+        container,
+        "Gender",
+        data.gender
+    );
+
+
+    addReviewItem(
+        container,
+        "Email",
+        data.email
+    );
+
+
+    addReviewItem(
+        container,
+        "Phone",
+        data.phone
+    );
+
+
+    addReviewItem(
+        container,
+        "College",
+        data.college
+    );
+
+
+    /*
+        Scholarship-specific information.
+    */
+
+    if (
+        selectedRequirements.fields &&
+        selectedRequirements.fields.length
+    ) {
+
+        selectedRequirements.fields.forEach(
+            function(field) {
+
+                addReviewItem(
+                    container,
+                    field.label,
+                    data.scholarship_specific_details[
+                        field.id
+                    ]
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+        Documents.
+    */
+
+    const documentNames = [];
+
+
+    selectedRequirements.documents.forEach(
+        function(key) {
+
+            const input =
+                document.getElementById(
+                    "file_" + key
+                );
+
+
+            if (
+                input &&
+                input.files &&
+                input.files.length
+            ) {
+
+                documentNames.push(
+                    DOCUMENT_DEFINITIONS[key].title +
+                    ": " +
+                    input.files[0].name
+                );
+
+            }
+
+        }
+    );
+
+
+    addReviewItem(
+        container,
+        "Uploaded Documents",
+        documentNames.join(" | "),
+        true
+    );
+
+}
+
+
+/* =========================================================
+   ADD REVIEW ITEM
+========================================================= */
+
+function addReviewItem(
+    container,
+    label,
+    value,
+    full = false
+) {
+
+    const div =
+        document.createElement("div");
+
+
+    div.className =
+        "review-item" +
+        (full ? " review-full" : "");
+
+
+    div.innerHTML = `
+
+        <small>
+            ${escapeHTML(label)}
+        </small>
+
+        <strong>
+            ${escapeHTML(
+                String(
+                    value ?? "-"
+                )
+            )}
+        </strong>
+
+    `;
+
+
+    container.appendChild(div);
+
+}
+
+
+/* =========================================================
+   CREATE APPLICATION
+========================================================= */
+
+async function createApplication() {
+
+    clearStatus();
+
+
+    const button =
+        document.getElementById(
+            "createApplicationButton"
+        );
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "Creating Application...";
+
+
+    try {
+
+        const data =
+            collectStudentData();
+
+
+        const formData =
+            new FormData();
+
+
+        /*
+            Scholarship data
+        */
+
+        formData.append(
+            "scholarship_id",
+            selectedScholarshipId
+        );
+
+
+        formData.append(
+            "scholarship_name",
+            selectedScholarshipName
+        );
+
+
+        /*
+            Student data
+        */
+
+        formData.append(
+            "full_name",
+            data.full_name
+        );
+
+        formData.append(
+            "age",
+            data.age
+        );
+
+        formData.append(
+            "state",
+            data.state
+        );
+
+        formData.append(
+            "course",
+            data.course
+        );
+
+        formData.append(
+            "academic_percentage",
+            data.academic_percentage
+        );
+
+        formData.append(
+            "annual_family_income",
+            data.annual_family_income
+        );
+
+        formData.append(
+            "category",
+            data.category
+        );
+
+        formData.append(
+            "gender",
+            data.gender
+        );
+
+        formData.append(
+            "email",
+            data.email
+        );
+
+        formData.append(
+            "phone",
+            data.phone
+        );
+
+        formData.append(
+            "college",
+            data.college
+        );
+
+
+        /*
+            Store scholarship-specific data
+            in the existing additional_details field.
+        */
+
+        const additionalData = {
+
+            notes:
+                data.additional_details,
+
+            scholarship_specific_details:
+                data.scholarship_specific_details
+
+        };
+
+
+        formData.append(
+            "additional_details",
+            JSON.stringify(
+                additionalData
+            )
+        );
+
+
+        /*
+            Existing backend document names.
+        */
+
+        selectedRequirements.documents.forEach(
+            function(key) {
+
+                const input =
+                    document.getElementById(
+                        "file_" + key
+                    );
+
+
+                if (
+                    input &&
+                    input.files &&
+                    input.files.length
+                ) {
+
+                    formData.append(
+                        key,
+                        input.files[0]
+                    );
+
+                }
+
+            }
+        );
+
+
+        const response =
+            await fetch(
+                "/api/applications",
+                {
+                    method: "POST",
+                    credentials: "include",
+                    body: formData
+                }
+            );
+
+
+        const contentType =
+            response.headers.get(
+                "content-type"
+            ) || "";
+
+
+        let result = {};
+
+
+        if (
+            contentType.includes(
+                "application/json"
+            )
+        ) {
+
+            result =
+                await response.json();
+
+        }
+
+        else {
+
+            const text =
+                await response.text();
+
+            console.error(
+                "Server returned:",
+                text
+            );
+
+            throw new Error(
+                "Server returned an unexpected response. Check the Flask terminal."
+            );
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.error ||
+                result.message ||
+                "Unable to create application."
+            );
+
+        }
+
+
+        createdApplicationId =
+            result.application_id ||
+            result.id ||
+            result.applicationId ||
+            "";
+
+
+        if (!createdApplicationId) {
+
+            createdApplicationId =
+                "SM-" +
+                Date.now();
+
+        }
+
+
+        document.getElementById(
+            "applicationId"
+        ).textContent =
+            createdApplicationId;
+
+
+        goStep(5);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        showStatus(
+            error.message ||
+            "Application creation failed.",
+            "error"
+        );
+
+
+    } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+            "Create Application";
+
+    }
+
+}
+
+
+/* =========================================================
+   VERIFY OTP
+========================================================= */
+
+async function verifyOTP() {
+
+    clearStatus();
+
+
+    const otp =
+        document.getElementById(
+            "otp"
+        ).value.trim();
+
+
+    if (
+        otp !== "123456"
+    ) {
+
+        showStatus(
+            "Incorrect OTP. Use 123456 for this demo.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /*
+        If an application ID exists,
+        also tell the backend that OTP is verified.
+    */
+
+    if (createdApplicationId) {
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/application/" +
+                    encodeURIComponent(
+                        createdApplicationId
+                    ) +
+                    "/verify-otp",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+                        credentials: "include",
+                        body: JSON.stringify({
+                            otp: otp
+                        })
+                    }
+                );
+
+
+            /*
+                We don't block the demo if
+                the backend endpoint responds differently.
+            */
+
+            if (!response.ok) {
+
+                console.log(
+                    "OTP backend verification response:",
+                    response.status
+                );
+
+            }
+
+        } catch (error) {
+
+            console.log(
+                "OTP backend verification skipped:",
+                error
+            );
+
+        }
+
+    }
+
+
+    goStep(6);
+
+}
+
+
+/* =========================================================
+   GET VALUE
+========================================================= */
+
+function getValue(id) {
+
+    const element =
+        document.getElementById(id);
+
+
+    if (!element) {
+        return "";
+    }
+
+
+    return element.value.trim();
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function showStatus(
+    message,
+    type
+) {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    status.textContent =
+        message;
+
+
+    status.className =
+        "status " + type;
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+function clearStatus() {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    status.textContent =
+        "";
+
+
+    status.className =
+        "status";
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function goDashboard() {
+
+    window.location.href =
+        "/dashboard";
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout() {
+
+    try {
+
+        await fetch(
+            "/logout",
+            {
+                method: "GET",
+                credentials: "include"
+            }
+        );
+
+    } catch {
+
+        // Continue to login.
+
+    }
+
+
+    window.location.href =
+        "/login";
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function escapeAttribute(value) {
+
+    return escapeHTML(value);
+
+}
+
+</script>
+
+
+</body>
+
+</html>
